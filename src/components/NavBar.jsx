@@ -39,7 +39,7 @@ export default function NavBar() {
         }}
       >
         <div>
-          <img src={Logo} alt="Descrição da imagem" class="w-28 auto" />
+          <img src={Logo} alt="Descrição da imagem" className="w-28 auto" />
         </div>
 
         <div style={{ display: "flex", gap: 36 }}>
@@ -64,31 +64,37 @@ export default function NavBar() {
           ))}
         </div>
 
-        <button
+        <div
           style={{
-            background: colors.green,
-            color: "white",
-            border: "none",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 8,
+            background: `${colors.softGreen}45`,
             borderRadius: 50,
-            padding: "10px 24px",
-            fontFamily: fonts.main,
-            fontWeight: 700,
-            fontSize: 14,
-            cursor: "pointer",
-            boxShadow: `0 4px 20px ${colors.green}40`,
-            transition: "transform 0.2s, box-shadow 0.2s",
-          }}
-          onMouseEnter={(e) => {
-            e.target.style.transform = "translateY(-2px)";
-            e.target.style.boxShadow = `0 8px 28px ${colors.green}50`;
-          }}
-          onMouseLeave={(e) => {
-            e.target.style.transform = "translateY(0)";
-            e.target.style.boxShadow = `0 4px 20px ${colors.green}40`;
+            padding: "6px 18px",
+            border: `1px solid ${colors.softGreen}`,
           }}
         >
-          Coming Soon
-        </button>
+          <div
+            style={{
+              width: 7,
+              height: 7,
+              borderRadius: "50%",
+              background: colors.green,
+              animation: "pulse 2s infinite",
+            }}
+          />
+          <span
+            style={{
+              fontFamily: fonts.main,
+              fontSize: 13,
+              fontWeight: 700,
+              color: colors.darkGreen,
+            }}
+          >
+            Coming Soon
+          </span>
+        </div>
       </div>
     </nav>
   );

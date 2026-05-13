@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Wave from "./Wave";
-import PhoneMockup from "./PhoneMockup";
 import { colors, fonts } from "../styles/theme";
+import mockup from "../assets/mockup_nidush.png";
 
 const QUESTIONS = [
   "What if you could leave the chaos at the door?",
@@ -9,6 +9,23 @@ const QUESTIONS = [
   "What if rest didn't feel like something you had to earn?",
   "What if switching off was as easy as walking through the door?",
 ];
+
+const heroStyle = `
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  @keyframes fadeInLeft {
+    from { opacity: 0; transform: translateX(-32px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes fadeInRight {
+    from { opacity: 0; transform: translateX(32px) rotate(6deg); }
+    to   { opacity: 1; transform: translateX(0) rotate(6deg); }
+  }
+  @media (max-width: 768px) {
+    .hero-inner { flex-direction: column !important; text-align: center !important; }
+    .hero-text  { align-items: center !important; }
+    .hero-image { margin-top: 40px; transform: rotate(0deg) !important; }
+  }
+`;
 
 export default function HeroSection() {
   const [questionIdx, setQuestionIdx] = useState(0);
@@ -34,11 +51,13 @@ export default function HeroSection() {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        padding: "120px clamp(1.5rem, 5vw, 4rem) 0",
+        padding: "70px clamp(1.5rem, 5vw, 4rem) 0",
         position: "relative",
         overflow: "hidden",
       }}
     >
+      <style>{heroStyle}</style>
+
       {/* Ambient blobs */}
       <div
         style={{
@@ -67,172 +86,167 @@ export default function HeroSection() {
         }}
       />
 
+      {/* Inner layout */}
       <div
+        className="hero-inner"
         style={{
-          maxWidth: 820,
-          textAlign: "center",
+          maxWidth: 1100,
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: "clamp(2rem, 6vw, 5rem)",
           position: "relative",
           zIndex: 1,
         }}
       >
-        {/* Coming Soon badge */}
+        {/* LEFT — texto */}
         <div
+          className="hero-text"
           style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 8,
-            background: `${colors.softGreen}45`,
-            borderRadius: 50,
-            padding: "6px 18px",
-            marginBottom: 32,
-            border: `1px solid ${colors.softGreen}`,
+            flex: "1 1 480px",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start",
+            animation: "fadeInLeft 0.8s ease both",
           }}
         >
-          <div
-            style={{
-              width: 7,
-              height: 7,
-              borderRadius: "50%",
-              background: colors.green,
-              animation: "pulse 2s infinite",
-            }}
-          />
-          <span
+          {/* Coming Soon badge */}
+
+          {/* Headline */}
+          <h1
             style={{
               fontFamily: fonts.main,
-              fontSize: 13,
-              fontWeight: 700,
+              fontWeight: 800,
+              fontSize: "clamp(2.6rem, 5.5vw, 4.4rem)",
               color: colors.darkGreen,
+              lineHeight: 1.1,
+              marginBottom: 24,
+              letterSpacing: "-0.03em",
             }}
           >
-            Coming Soon
-          </span>
-        </div>
+            Your home,
+            <br />
+            <span style={{ color: colors.green }}>your safe space.</span>
+          </h1>
 
-        {/* Headline */}
-        <h1
-          style={{
-            fontFamily: fonts.main,
-            fontWeight: 800,
-            fontSize: "clamp(2.6rem, 6.5vw, 4.8rem)",
-            color: colors.darkGreen,
-            lineHeight: 1.1,
-            marginBottom: 24,
-            letterSpacing: "-0.03em",
-          }}
-        >
-          Your home,
-          <br />
-          <span style={{ color: colors.green }}>your safe space.</span>
-        </h1>
+          {/* Rotating question */}
+          <div
+            style={{
+              minHeight: 72,
+              display: "flex",
+              alignItems: "center",
+              marginBottom: 28,
+            }}
+          >
+            <p
+              style={{
+                fontFamily: fonts.main,
+                fontSize: "clamp(1rem, 2vw, 1.2rem)",
+                color: colors.textLight,
+                fontWeight: 500,
+                fontStyle: "italic",
+                maxWidth: 480,
+                lineHeight: 1.55,
+                opacity: visible ? 1 : 0,
+                transform: visible ? "translateY(0)" : "translateY(10px)",
+                transition: "opacity 0.4s ease, transform 0.4s ease",
+              }}
+            >
+              "{QUESTIONS[questionIdx]}"
+            </p>
+          </div>
 
-        {/* Rotating question */}
-        <div
-          style={{
-            minHeight: 72,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            marginBottom: 28,
-          }}
-        >
+          {/* Subline */}
           <p
             style={{
               fontFamily: fonts.main,
-              fontSize: "clamp(1.05rem, 2.5vw, 1.35rem)",
+              fontSize: "clamp(0.95rem, 1.8vw, 1.05rem)",
               color: colors.textLight,
-              fontWeight: 500,
-              fontStyle: "italic",
-              maxWidth: 580,
-              lineHeight: 1.55,
-              opacity: visible ? 1 : 0,
-              transform: visible ? "translateY(0)" : "translateY(10px)",
-              transition: "opacity 0.4s ease, transform 0.4s ease",
+              maxWidth: 460,
+              margin: "0 0 44px",
+              lineHeight: 1.75,
             }}
           >
-            "{QUESTIONS[questionIdx]}"
+            An app that helps you regulate stress and anxiety by adapting your
+            home to how you feel.
           </p>
+
+          {/* CTAs */}
+          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+            <button
+              style={{
+                background: colors.green,
+                color: "white",
+                border: "none",
+                borderRadius: 50,
+                padding: "15px 36px",
+                fontFamily: fonts.main,
+                fontWeight: 700,
+                fontSize: 16,
+                cursor: "pointer",
+                boxShadow: `0 8px 32px ${colors.green}40`,
+                transition: "all 0.2s",
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.transform = "translateY(-2px)";
+                e.target.style.boxShadow = `0 12px 36px ${colors.green}55`;
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.transform = "translateY(0)";
+                e.target.style.boxShadow = `0 8px 32px ${colors.green}40`;
+              }}
+            >
+              Join the waitlist
+            </button>
+            <button
+              style={{
+                background: "transparent",
+                color: colors.darkGreen,
+                border: `1.5px solid ${colors.green}55`,
+                borderRadius: 50,
+                padding: "15px 36px",
+                fontFamily: fonts.main,
+                fontWeight: 600,
+                fontSize: 16,
+                cursor: "pointer",
+                transition: "all 0.2s",
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.background = `${colors.softGreen}28`;
+                e.target.style.borderColor = colors.green;
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.background = "transparent";
+                e.target.style.borderColor = `${colors.green}55`;
+              }}
+            >
+              Discover more ↓
+            </button>
+          </div>
         </div>
 
-        {/* Subline */}
-        <p
-          style={{
-            fontFamily: fonts.main,
-            fontSize: "clamp(0.95rem, 2vw, 1.1rem)",
-            color: colors.textLight,
-            maxWidth: 520,
-            margin: "0 auto 44px",
-            lineHeight: 1.75,
-          }}
-        >
-          An app that helps you regulate stress and anxiety by adapting your
-          home to how you feel.
-        </p>
-
-        {/* CTAs */}
+        {/* RIGHT — mockup */}
         <div
+          className="hero-image"
           style={{
-            display: "flex",
-            gap: 12,
-            justifyContent: "center",
-            flexWrap: "wrap",
+            flex: "0 0 auto",
+            animation: "fadeInRight 0.9s ease both",
+            transform: "rotate(6deg)",
+            filter: `drop-shadow(0 32px 64px ${colors.green}30) drop-shadow(0 8px 24px rgba(0,0,0,0.10))`,
           }}
         >
-          <button
+          <img
+            src={mockup}
+            alt="App mockup"
             style={{
-              background: colors.green,
-              color: "white",
-              border: "none",
-              borderRadius: 50,
-              padding: "15px 36px",
-              fontFamily: fonts.main,
-              fontWeight: 700,
-              fontSize: 16,
-              cursor: "pointer",
-              boxShadow: `0 8px 32px ${colors.green}40`,
-              transition: "all 0.2s",
+              width: "clamp(200px, 22vw, 280px)",
+              height: "auto",
+              borderRadius: 36,
+              display: "block",
             }}
-            onMouseEnter={(e) => {
-              e.target.style.transform = "translateY(-2px)";
-              e.target.style.boxShadow = `0 12px 36px ${colors.green}55`;
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.transform = "translateY(0)";
-              e.target.style.boxShadow = `0 8px 32px ${colors.green}40`;
-            }}
-          >
-            Join the waitlist
-          </button>
-          <button
-            style={{
-              background: "transparent",
-              color: colors.darkGreen,
-              border: `1.5px solid ${colors.green}55`,
-              borderRadius: 50,
-              padding: "15px 36px",
-              fontFamily: fonts.main,
-              fontWeight: 600,
-              fontSize: 16,
-              cursor: "pointer",
-              transition: "all 0.2s",
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.background = `${colors.softGreen}28`;
-              e.target.style.borderColor = colors.green;
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.background = "transparent";
-              e.target.style.borderColor = `${colors.green}55`;
-            }}
-          >
-            Discover more ↓
-          </button>
+          />
         </div>
-      </div>
-
-      {/* Phone mockup */}
-      <div style={{ marginTop: 72, position: "relative", zIndex: 1 }}>
-        <PhoneMockup />
       </div>
 
       {/* Wave transition */}

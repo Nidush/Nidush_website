@@ -1,11 +1,13 @@
-import './styles/global.css';
-import NavBar from './components/NavBar';
-import HeroSection from './components/HeroSection';
-import FeaturesSection from './components/FeaturesSection';
-import QuoteSection from './components/QuoteSection';
-import SpotifySection from './components/SpotifySection';
-import WaitlistSection from './components/WaitlistSection';
-import Footer from './components/Footer';
+import "./styles/global.css";
+import NavBar from "./components/NavBar";
+import HeroSection from "./components/HeroSection";
+import FeaturesSection from "./components/FeaturesSection";
+import QuoteSection from "./components/QuoteSection";
+import SpotifySection from "./components/SpotifySection";
+import WaitlistSection from "./components/WaitlistSection";
+import Footer from "./components/Footer";
+import ScrollToTopButton from "./components/ScrolltoTopButton";
+import TrailerSection from "./components/TrailerSection";
 
 export default function App() {
   return (
@@ -16,9 +18,11 @@ export default function App() {
         <FeaturesSection />
         <QuoteSection />
         <SpotifySection />
+        <TrailerSection />
         <WaitlistSection />
       </main>
       <Footer />
+      <ScrollToTopButton />
     </>
   );
 }
