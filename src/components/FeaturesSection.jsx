@@ -5,40 +5,35 @@ import video2 from "../videos/nidush_video3.mp4";
 import video3 from "../videos/nidush_video4.mp4";
 import video4 from "../videos/nidush_video5.mp4";
 import video5 from "../videos/nidush_video6.mp4";
+import video6 from "../videos/nidush_video7.mp4";
 
 const FEATURES = [
   {
-    icon: "🏠",
     title: "Smart Scenarios",
     desc: "Create personalized environments that transform each room to match how you feel — automatically.",
     video: video2,
   },
   {
-    icon: "💚",
     title: "Wearable Sync",
     desc: "Your heart rate guides your home. Nidush intervenes at the exact moment you need it.",
     video: video4,
   },
   {
-    icon: "🎵",
     title: "Spotify Integration",
     desc: "Deep Sleep. Deep Focus. Nature Escape. Official playlists crafted for every moment of your day.",
-    video: "/videos/spotify.mp4",
+    video: video6,
   },
   {
-    icon: "🏡",
     title: "Google Home",
     desc: "Your entire home ecosystem, unified and responsive to your wellbeing.",
     video: video1,
   },
   {
-    icon: "🧘",
     title: "Hobbies & Activities",
     desc: "Recipes, guided meditation, audiobooks and workout — everything you love, all in one place.",
     video: video5,
   },
   {
-    icon: "🔕",
     title: "Silence Mode",
     desc: "Nidush silences notifications and distractions so you can simply breathe.",
     video: video3,
