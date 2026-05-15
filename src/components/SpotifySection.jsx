@@ -161,7 +161,6 @@ export default function SpotifySection() {
                 border: "1px solid #1DB95430",
               }}
             >
-              <span style={{ fontSize: 15 }}>🎵</span>
               <span
                 style={{
                   fontFamily: fonts.main,

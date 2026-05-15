@@ -1,12 +1,72 @@
 import { useState } from "react";
 import { colors, fonts } from "../styles/theme";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  addDoc,
+  serverTimestamp,
+} from "firebase/firestore";
+import { db } from "../../firebaseConfig"; // Ajusta este caminho para o teu ficheiro firebase.js
+import emailjs from "@emailjs/browser"; // Importação do EmailJS
 
 export default function WaitlistSection() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [message, setMessage] = useState(""); // Para guardar erros ou avisos
 
-  const handleSubmit = () => {
-    if (email.includes("@")) setSubmitted(true);
+  const handleSubmit = async () => {
+    // 1. Validação básica do email
+    if (!email.includes("@") || !email.includes(".")) {
+      setMessage("Por favor, insere um endereço de email válido.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    setMessage(""); // Limpa mensagens anteriores
+
+    try {
+      // 2. Referência à coleção "waitlist"
+      const waitlistRef = collection(db, "waitlist");
+
+      // 3. Verifica se o email já existe na base de dados
+      const q = query(waitlistRef, where("email", "==", email.toLowerCase()));
+      const querySnapshot = await getDocs(q);
+
+      if (!querySnapshot.empty) {
+        // Se a query não estiver vazia, o email já lá está
+        setMessage("This email is already registered in our waitlist.");
+        setIsSubmitting(false);
+        return;
+      }
+
+      // 4. Se não existir, guarda o email na BD
+      await addDoc(waitlistRef, {
+        email: email.toLowerCase(),
+        createdAt: serverTimestamp(), // Guarda a data/hora exata do registo
+      });
+
+      // 5. Enviar o email de confirmação via EmailJS usando as variáveis de ambiente
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+      const templateParams = {
+        to_email: email.toLowerCase(),
+      };
+
+      await emailjs.send(serviceId, templateId, templateParams, publicKey);
+
+      // 6. Sucesso!
+      setSubmitted(true);
+    } catch (error) {
+      console.error("Erro ao processar o registo: ", error);
+      setMessage("There was an error. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleKeyDown = (e) => {
@@ -79,66 +139,100 @@ export default function WaitlistSection() {
           <div
             style={{
               display: "flex",
-              gap: 8,
-              maxWidth: 480,
-              margin: "0 auto",
-              flexWrap: "wrap",
-              justifyContent: "center",
+              flexDirection: "column",
+              alignItems: "center",
             }}
           >
-            <input
-              type="email"
-              placeholder="your@email.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              onKeyDown={handleKeyDown}
+            <div
               style={{
-                flex: 1,
-                minWidth: 220,
-                padding: "14px 22px",
-                borderRadius: 50,
-                border: `1.5px solid ${colors.softGreen}`,
-                background: "white",
-                fontFamily: fonts.main,
-                fontSize: 15,
-                color: colors.darkGreen,
-                outline: "none",
-                transition: "border-color 0.2s",
-              }}
-              onFocus={(e) => {
-                e.target.style.borderColor = colors.green;
-              }}
-              onBlur={(e) => {
-                e.target.style.borderColor = colors.softGreen;
-              }}
-            />
-            <button
-              onClick={handleSubmit}
-              style={{
-                background: colors.green,
-                color: "white",
-                border: "none",
-                borderRadius: 50,
-                padding: "14px 28px",
-                fontFamily: fonts.main,
-                fontWeight: 700,
-                fontSize: 15,
-                cursor: "pointer",
-                whiteSpace: "nowrap",
-                boxShadow: `0 4px 20px ${colors.green}40`,
-                transition: "all 0.2s",
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.transform = "translateY(-2px)";
-                e.target.style.boxShadow = `0 8px 28px ${colors.green}50`;
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.transform = "translateY(0)";
-                e.target.style.boxShadow = `0 4px 20px ${colors.green}40`;
+                display: "flex",
+                gap: 8,
+                maxWidth: 480,
+                width: "100%",
+                flexWrap: "wrap",
+                justifyContent: "center",
               }}
             >
-              Join waitlist
-            </button>
+              <input
+                type="email"
+                placeholder="your@email.com"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  setMessage(""); // Limpa o erro assim que o utilizador começa a escrever de novo
+                }}
+                onKeyDown={handleKeyDown}
+                disabled={isSubmitting}
+                style={{
+                  flex: 1,
+                  minWidth: 220,
+                  padding: "14px 22px",
+                  borderRadius: 50,
+                  border: `1.5px solid ${message ? "red" : colors.softGreen}`,
+                  background: "white",
+                  fontFamily: fonts.main,
+                  fontSize: 15,
+                  color: colors.darkGreen,
+                  outline: "none",
+                  transition: "border-color 0.2s",
+                  opacity: isSubmitting ? 0.7 : 1,
+                }}
+                onFocus={(e) => {
+                  if (!message) e.target.style.borderColor = colors.green;
+                }}
+                onBlur={(e) => {
+                  if (!message) e.target.style.borderColor = colors.softGreen;
+                }}
+              />
+              <button
+                onClick={handleSubmit}
+                disabled={isSubmitting}
+                style={{
+                  background: colors.green,
+                  color: "white",
+                  border: "none",
+                  borderRadius: 50,
+                  padding: "14px 28px",
+                  fontFamily: fonts.main,
+                  fontWeight: 700,
+                  fontSize: 15,
+                  cursor: isSubmitting ? "not-allowed" : "pointer",
+                  whiteSpace: "nowrap",
+                  boxShadow: `0 4px 20px ${colors.green}40`,
+                  transition: "all 0.2s",
+                  opacity: isSubmitting ? 0.7 : 1,
+                }}
+                onMouseEnter={(e) => {
+                  if (!isSubmitting) {
+                    e.target.style.transform = "translateY(-2px)";
+                    e.target.style.boxShadow = `0 8px 28px ${colors.green}50`;
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!isSubmitting) {
+                    e.target.style.transform = "translateY(0)";
+                    e.target.style.boxShadow = `0 4px 20px ${colors.green}40`;
+                  }
+                }}
+              >
+                {isSubmitting ? "Joining..." : "Join waitlist"}
+              </button>
+            </div>
+
+            {/* Mensagem de Erro / Aviso */}
+            {message && (
+              <p
+                style={{
+                  color: message.includes("regist") ? colors.darkGreen : "red",
+                  fontFamily: fonts.main,
+                  fontSize: "0.9rem",
+                  marginTop: 12,
+                  fontWeight: 500,
+                }}
+              >
+                {message}
+              </p>
+            )}
           </div>
         ) : (
           <div
@@ -159,7 +253,7 @@ export default function WaitlistSection() {
                 marginBottom: 6,
               }}
             >
-              🌱 You're on the list!
+              You're on the list!
             </p>
             <p
               style={{
@@ -168,7 +262,7 @@ export default function WaitlistSection() {
                 fontSize: "0.95rem",
               }}
             >
-              We'll reach out when your safe space is ready.
+              We'll reach out when your safe space is ready. Check your inbox!
             </p>
           </div>
         )}

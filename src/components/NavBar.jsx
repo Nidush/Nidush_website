@@ -1,8 +1,15 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom"; // 1. Importa o Link do React Router
 import Logo from "./../assets/nidush_logo_horizontal.png";
 import { colors, fonts } from "../styles/theme";
 
-const NAV_LINKS = ["Features", "Hobbies", "Integrations", "Community"];
+// 2. Transforma as strings num objeto com label e path (caminho da rota)
+const NAV_LINKS = [
+  { label: "Features", path: "/features" },
+  { label: "Community", path: "/community" },
+  { label: "About us", path: "/about-us" },
+  { label: "Join the waitlist", path: "/waitlist" },
+];
 
 export default function NavBar() {
   const [scrolled, setScrolled] = useState(false);
@@ -38,15 +45,19 @@ export default function NavBar() {
           justifyContent: "space-between",
         }}
       >
+        {/* 3. O logótipo agora leva-te sempre de volta à Home ("/") */}
         <div>
-          <img src={Logo} alt="Descrição da imagem" className="w-28 auto" />
+          <Link to="/">
+            <img src={Logo} alt="Logo Nidush" className="w-28 h-auto" />
+          </Link>
         </div>
 
         <div style={{ display: "flex", gap: 36 }}>
-          {NAV_LINKS.map((link) => (
-            <a
-              key={link}
-              href={`#${link.toLowerCase()}`}
+          {/* 4. Mapeamento usando o componente <Link> */}
+          {NAV_LINKS.map(({ label, path }) => (
+            <Link
+              key={label}
+              to={path} // Usar "to" em vez de "href"
               style={{
                 fontFamily: fonts.main,
                 fontWeight: 600,
@@ -59,8 +70,8 @@ export default function NavBar() {
               onMouseEnter={(e) => (e.target.style.opacity = 1)}
               onMouseLeave={(e) => (e.target.style.opacity = 0.75)}
             >
-              {link}
-            </a>
+              {label}
+            </Link>
           ))}
         </div>
 
