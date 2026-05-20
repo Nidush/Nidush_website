@@ -1,0 +1,230 @@
+/* NavBar.css */
+
+:root {
+  --nav-bg: #f0f2eb;
+  --nav-dark-green: #1b3a2d;
+  --nav-green: #059669; /* Verde principal */
+  --nav-soft-green: #a7f3d0; /* Verde suave para bordas e fundos */
+}
+
+/* --- NavBar Principal --- */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  transition: all 0.4s ease;
+  padding: 0 clamp(1.5rem, 5vw, 4rem);
+  background: transparent;
+  border-bottom: 1px solid transparent;
+}
+
+/* Estado de Scroll ou Menu Aberto */
+.navbar.scrolled,
+.navbar.open {
+  background: rgba(240, 242, 235, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(167, 243, 208, 0.5); /* softGreen com opacidade */
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* --- Logótipo --- */
+.nav-logo-wrapper {
+  position: relative;
+  z-index: 101; /* Fica acima do menu dropdown */
+}
+.nav-logo {
+  width: 6rem; /* Equivalente a w-24 no Tailwind */
+  height: auto;
+}
+@media (min-width: 768px) {
+  .nav-logo {
+    width: 7rem; /* Equivalente a w-28 */
+  }
+}
+
+/* --- Links Desktop --- */
+.nav-links-desktop {
+  display: none; /* Escondido em mobile */
+  gap: 1.5rem;
+}
+@media (min-width: 768px) {
+  .nav-links-desktop {
+    display: flex;
+  }
+}
+@media (min-width: 1024px) {
+  .nav-links-desktop {
+    gap: 2.25rem;
+  }
+}
+
+.nav-link {
+  font-family: "Nunito", sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--nav-dark-green);
+  text-decoration: none;
+  opacity: 0.75;
+  transition: opacity 0.2s ease;
+}
+.nav-link:hover {
+  opacity: 1;
+}
+
+/* --- Badge "Coming Soon" --- */
+.nav-badge {
+  align-items: center;
+  gap: 8px;
+  background: rgba(167, 243, 208, 0.45);
+  border: 1px solid var(--nav-soft-green);
+  border-radius: 50px;
+  padding: 6px 18px;
+}
+.nav-badge-desktop {
+  display: none;
+}
+@media (min-width: 768px) {
+  .nav-badge-desktop {
+    display: inline-flex;
+  }
+}
+
+.nav-badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--nav-green);
+  animation: pulse 2s infinite;
+}
+.nav-badge-text {
+  font-family: "Nunito", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--nav-dark-green);
+}
+
+/* --- Botão Menu Hambúrguer (Mobile) --- */
+.hamburger-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  position: relative;
+  z-index: 101;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+@media (min-width: 768px) {
+  .hamburger-btn {
+    display: none;
+  }
+}
+
+.hamburger-line {
+  display: block;
+  width: 24px;
+  height: 2.5px;
+  border-radius: 9999px;
+  background-color: var(--nav-dark-green);
+  transition: all 0.3s ease-out;
+}
+
+.line-top {
+  transform: translateY(-4px);
+}
+.line-middle {
+  margin: 3px 0;
+}
+.line-bottom {
+  transform: translateY(4px);
+}
+
+/* Animação para transformar o hambúrguer num "X" */
+.navbar.open .line-top {
+  transform: rotate(45deg) translateY(2px) translateX(2px);
+}
+.navbar.open .line-middle {
+  opacity: 0;
+}
+.navbar.open .line-bottom {
+  transform: rotate(-45deg) translateY(-3px) translateX(3px);
+}
+
+/* --- Menu Dropdown (Mobile) --- */
+.mobile-menu {
+  position: absolute;
+  top: 70px;
+  left: 0;
+  width: 100%;
+  background-color: var(--nav-bg);
+  transition: all 0.3s ease-in-out;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  max-height: 0; /* Gaveta fechada por defeito */
+  opacity: 0;
+}
+@media (min-width: 768px) {
+  .mobile-menu {
+    display: none;
+  }
+}
+
+.navbar.open .mobile-menu {
+  max-height: 100vh;
+  opacity: 1;
+  border-bottom: 1px solid rgba(167, 243, 208, 0.4);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+}
+
+.mobile-menu-inner {
+  padding: 2rem clamp(1.5rem, 5vw, 4rem);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  height: calc(100vh - 70px);
+}
+
+.mobile-nav-link {
+  font-family: "Nunito", sans-serif;
+  color: var(--nav-dark-green);
+  font-weight: 700;
+  font-size: 1.25rem;
+  text-decoration: none;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding-bottom: 1rem;
+}
+.mobile-nav-link:hover {
+  opacity: 1;
+}
+
+.nav-badge-mobile {
+  display: inline-flex;
+  width: fit-content;
+  padding: 8px 20px;
+  margin-top: 1rem;
+}
+.nav-badge-mobile .nav-badge-dot {
+  width: 8px;
+  height: 8px;
+}
+.nav-badge-mobile .nav-badge-text {
+  font-size: 14px;
+}

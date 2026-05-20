@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { colors, fonts } from "../styles/theme";
+import "../styles/Features.css"; // A nossa folha de estilos
 import video1 from "../videos/nidush_video2.mp4";
 import video2 from "../videos/nidush_video3.mp4";
 import video3 from "../videos/nidush_video4.mp4";
@@ -40,23 +40,13 @@ const FEATURES = [
   },
 ];
 
-const sectionStyle = `
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-`;
-
-// A altura da tua navbar para que o vídeo não fique cortado
-const NAV_HEIGHT = 70;
-const BG_COLOR = "#f0f2eb"; // A cor base que pediste (igual à da navbar)
-
 export default function FeaturesStickySection() {
   const sectionRef = useRef(null);
   const videoRefs = useRef([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [textVisible, setTextVisible] = useState(true);
 
+  // Lógica de Scroll (Mantida)
   useEffect(() => {
     const handleScroll = () => {
       if (!sectionRef.current) return;
@@ -79,6 +69,7 @@ export default function FeaturesStickySection() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [activeIndex]);
 
+  // Lógica dos Vídeos
   useEffect(() => {
     videoRefs.current.forEach((vid, i) => {
       if (!vid) return;
@@ -90,190 +81,59 @@ export default function FeaturesStickySection() {
     });
   }, [activeIndex]);
 
+  // Scroll ao clicar
+  const handleOptionClick = (index) => {
+    if (!sectionRef.current) return;
+    const sectionTop = sectionRef.current.offsetTop;
+    const height = sectionRef.current.offsetHeight;
+    const scrollable = height - window.innerHeight;
+
+    const targetScroll =
+      sectionTop + ((index + 0.1) / FEATURES.length) * scrollable;
+    window.scrollTo({ top: targetScroll, behavior: "smooth" });
+  };
+
   return (
     <section
       ref={sectionRef}
       id="features"
-      style={{
-        position: "relative",
-        height: `${FEATURES.length * 100}vh`,
-        backgroundColor: BG_COLOR,
-      }}
+      className="features-section"
+      style={{ height: `${FEATURES.length * 100}vh` }}
     >
-      <style>{sectionStyle}</style>
+      <div className="features-sticky-wrapper">
+        {/* ESQUERDA NO PC / POR CIMA EM MOBILE — Textos e Timeline */}
+        {/* Agora está na ordem correta do DOM! */}
+        <div className="features-content-side">
+          <p className="feat-label">Features</p>
 
-      {/* Sticky viewport com offset da NavBar */}
-      <div
-        style={{
-          position: "sticky",
-          top: NAV_HEIGHT, // Começa exatamente abaixo da NavBar
-          height: `calc(100vh - ${NAV_HEIGHT}px)`, // Ocupa o ecrã até ao fundo
-          width: "100%",
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          overflow: "hidden",
-        }}
-      >
-        {/* ESQUERDA — 50% Informação e Texto */}
-        <div
-          style={{
-            flex: 1,
-            height: "100%",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            padding: "0 clamp(2rem, 5vw, 6rem)",
-            zIndex: 3,
-            backgroundColor: BG_COLOR, // Nova cor de fundo
-            position: "relative",
-          }}
-        >
-          <p
-            style={{
-              fontFamily: fonts.main,
-              fontWeight: 700,
-              fontSize: 13,
-              color: colors.green,
-              letterSpacing: "0.12em",
-              textTransform: "uppercase",
-              marginBottom: 16,
-            }}
-          >
-            Features
-          </p>
-          <h2
-            style={{
-              fontFamily: fonts.main,
-              fontWeight: 800,
-              fontSize: "clamp(2rem, 3.5vw, 3.5rem)",
-              color: colors.darkGreen,
-              letterSpacing: "-0.025em",
-              lineHeight: 1.15,
-              marginBottom: 48,
-            }}
-          >
+          <h2 className="feat-main-title">
             Your home,
             <br />
-            <span style={{ color: colors.green }}>tuned to you.</span>
+            <span>tuned to you.</span>
           </h2>
 
-          <div
-            key={activeIndex}
-            style={{
-              animation: textVisible ? "fadeUp 0.35s ease both" : "none",
-              opacity: textVisible ? 1 : 0,
-              transition: "opacity 0.22s ease",
-              minHeight: "180px",
-            }}
-          >
-            <div style={{ fontSize: 48, marginBottom: 20 }}>
-              {FEATURES[activeIndex].icon}
-            </div>
-            <h3
-              style={{
-                fontFamily: fonts.main,
-                fontWeight: 800,
-                fontSize: "clamp(1.5rem, 2.2vw, 2.2rem)",
-                color: colors.darkGreen,
-                marginBottom: 16,
-                letterSpacing: "-0.02em",
-              }}
-            >
-              {FEATURES[activeIndex].title}
-            </h3>
-            <p
-              style={{
-                fontFamily: fonts.main,
-                fontSize: "1.1rem",
-                color: colors.textLight,
-                lineHeight: 1.85,
-                maxWidth: 480,
-              }}
-            >
-              {FEATURES[activeIndex].desc}
-            </p>
+          <div className={`feat-text-box ${textVisible ? "visible" : ""}`}>
+            <h3>{FEATURES[activeIndex].title}</h3>
+            <p>{FEATURES[activeIndex].desc}</p>
           </div>
 
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              flexWrap: "wrap",
-              gap: 24,
-              marginTop: 40,
-            }}
-          >
+          <div className="features-timeline">
             {FEATURES.map((f, i) => (
               <div
                 key={i}
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 8,
-                  cursor: "default",
-                }}
+                onClick={() => handleOptionClick(i)}
+                className={`timeline-item ${i === activeIndex ? "active" : ""}`}
               >
-                <div
-                  style={{
-                    height: 3,
-                    width: i === activeIndex ? "100%" : "20px",
-                    borderRadius: 3,
-                    background:
-                      i === activeIndex
-                        ? colors.green
-                        : `${colors.softGreen}70`,
-                    transition: "width 0.4s ease, background 0.4s ease",
-                  }}
-                />
-                <span
-                  style={{
-                    fontFamily: fonts.main,
-                    fontSize: 13,
-                    fontWeight: i === activeIndex ? 700 : 500,
-                    color:
-                      i === activeIndex
-                        ? colors.darkGreen
-                        : `${colors.textLight}80`,
-                    transition: "all 0.3s ease",
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  {f.title}
-                </span>
+                <div className="timeline-bar" />
+                <span className="timeline-text">{f.title}</span>
               </div>
             ))}
           </div>
         </div>
 
-        {/* DIREITA — 50% Vídeos */}
-        <div
-          style={{
-            flex: 1,
-            height: "100%",
-            position: "relative",
-            backgroundColor: colors.black,
-            overflow: "hidden",
-          }}
-        >
-          {/* Desfoque super progressivo com a cor pedida */}
-          <div
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "40%", // Mais largo para uma transição suave
-              height: "100%",
-              // Passos intermédios (rgba com base em #f0f2eb)
-              background: `linear-gradient(to right, 
-                ${BG_COLOR} 0%, 
-                rgba(240, 242, 235, 0.95) 15%, 
-                rgba(240, 242, 235, 0.6) 45%, 
-                rgba(240, 242, 235, 0) 100%)`,
-              zIndex: 2,
-              pointerEvents: "none",
-            }}
-          />
+        {/* DIREITA NO PC / FUNDO EM MOBILE — Vídeos */}
+        <div className="features-video-side">
+          <div className="features-video-overlay" />
 
           {FEATURES.map((feature, i) => (
             <video
@@ -283,18 +143,7 @@ export default function FeaturesStickySection() {
               muted
               loop
               playsInline
-              style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                objectPosition: "center",
-                opacity: i === activeIndex ? 1 : 0,
-                transition: "opacity 0.8s ease-in-out",
-                pointerEvents: "none",
-              }}
+              className={`features-video ${i === activeIndex ? "active" : ""}`}
             />
           ))}
         </div>

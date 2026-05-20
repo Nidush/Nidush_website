@@ -3,6 +3,7 @@ import "./styles/global.css";
 import Community from "./pages/community";
 import Features from "./pages/features";
 import AboutUs from "./pages/aboutUs";
+import WaitlistPage from "./pages/waitlistPage";
 import NavBar from "./components/NavBar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 export default function App() {
@@ -20,7 +21,7 @@ export default function App() {
         <Route path="/features" element={<Features />} />
         <Route path="/community" element={<Community />} />
         <Route path="/about-us" element={<AboutUs />} />
-
+        <Route path="/waitlist" element={<WaitlistPage />} />
         {/* Rota "catch-all" (*) para páginas que não existem (Erro 404) */}
         <Route
           path="*"

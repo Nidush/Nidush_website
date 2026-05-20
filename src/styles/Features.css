@@ -1,0 +1,258 @@
+/* Features.css */
+
+:root {
+  --feat-bg: #f0f2eb;
+  --feat-dark: #1b3a2d;
+  --feat-green: #059669;
+  --feat-soft: rgba(167, 243, 208, 0.7);
+  --feat-text-light: #78716c;
+}
+
+/* --- Contentor Principal --- */
+.features-section {
+  position: relative;
+  background-color: var(--feat-bg);
+}
+
+.features-sticky-wrapper {
+  position: sticky;
+  top: 70px; /* NAV_HEIGHT */
+  height: calc(100vh - 70px);
+  width: 100%;
+  display: flex;
+  overflow: hidden;
+  /* MOBILE FIRST: Tudo sobreposto numa única coluna */
+  flex-direction: column;
+}
+
+/* =========================================
+   MOBILE STYLES (Ecrãs pequenos)
+   ========================================= */
+
+/* --- Lado do Conteúdo (Texto e Timeline) --- */
+.features-content-side {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 2rem 3rem 2rem;
+  height: 100%;
+  background-color: transparent;
+}
+
+/* --- Lado do Vídeo --- */
+.features-video-side {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-color: black;
+  overflow: hidden;
+}
+
+/* Gradiente Desfocado 
+   Mobile: Fundo escuro/bege para o texto principal, e topo ligeiramente bege para as barras da Story */
+.features-video-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    var(--feat-bg) 0%,
+    rgba(240, 242, 235, 0.95) 32%,
+    rgba(240, 242, 235, 0) 65%,
+    rgba(240, 242, 235, 0.85) 100%
+  );
+}
+
+/* --- Estilos Gerais de Texto --- */
+.feat-label {
+  font-family: "Nunito", sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--feat-green);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.feat-main-title {
+  font-family: "Nunito", sans-serif;
+  font-weight: 800;
+  font-size: clamp(2rem, 8vw, 3.5rem);
+  color: var(--feat-dark);
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  margin-bottom: 24px;
+  margin-top: auto; /* Empurra o título para baixo (afastando-o do menu) */
+}
+.feat-main-title span {
+  color: var(--feat-green);
+}
+
+.feat-text-box {
+  min-height: 140px;
+  opacity: 0;
+  transform: translateY(15px);
+  transition: all 0.25s ease;
+}
+.feat-text-box.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.feat-text-box h3 {
+  font-family: "Nunito", sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.5rem, 5vw, 2.2rem);
+  color: var(--feat-dark);
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+}
+.feat-text-box p {
+  font-family: "Nunito", sans-serif;
+  font-size: 1.05rem;
+  color: var(--feat-text-light);
+  line-height: 1.6;
+  max-width: 480px;
+  font-weight: 600;
+}
+
+/* --- Timeline de Funcionalidades (STORY MODE EM MOBILE) --- */
+.features-timeline {
+  display: flex;
+  flex-direction: row;
+  gap: 6px; /* Espaço reduzido entre as barras */
+  order: -1; /* Atira o menu para o topo do ecrã */
+  width: 100%;
+  padding-top: 10px; /* Dá uma margem extra no topo */
+}
+
+.timeline-item {
+  display: flex;
+  flex: 1; /* MÁGICA: Faz com que todos os itens dividam o ecrã igualmente! */
+  cursor: pointer;
+  padding: 10px 0; /* Aumenta a área de toque para os dedos */
+}
+
+.timeline-bar {
+  width: 100%; /* A barra ocupa o espaço todo que o flex:1 lhe dá */
+  height: 3px;
+  border-radius: 3px;
+  background-color: var(--feat-soft);
+  transition: background-color 0.4s ease;
+}
+.timeline-item.active .timeline-bar {
+  background-color: var(--feat-green);
+}
+
+/* Esconde os títulos no telemóvel para ficar só os traços */
+.timeline-text {
+  display: none;
+}
+
+.features-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+}
+.features-video.active {
+  opacity: 1;
+}
+
+/* =========================================
+   DESKTOP STYLES (Ecrãs grandes: Volta ao original)
+   ========================================= */
+@media (min-width: 1024px) {
+  .features-sticky-wrapper {
+    flex-direction: row; /* Volta a ficar Lado a Lado */
+  }
+
+  .features-content-side {
+    flex: 1;
+    min-width: 50%;
+    justify-content: center;
+    padding: 0 clamp(2rem, 5vw, 6rem);
+    background-color: var(--feat-bg);
+  }
+
+  .features-video-side {
+    position: relative;
+    flex: 1;
+    height: 100%;
+    inset: auto;
+  }
+
+  .features-video-overlay {
+    background: linear-gradient(
+      to right,
+      var(--feat-bg) 0%,
+      rgba(240, 242, 235, 0.95) 15%,
+      rgba(240, 242, 235, 0.6) 45%,
+      rgba(240, 242, 235, 0) 100%
+    );
+  }
+
+  .feat-main-title {
+    margin-bottom: 48px;
+    margin-top: 0; /* Remove a margem extra do mobile */
+  }
+  .feat-text-box {
+    min-height: 180px;
+  }
+
+  /* Timeline Desktop: Volta para baixo do texto com scroll horizontal */
+  .features-timeline {
+    order: 0;
+    margin-top: 40px;
+    gap: 16px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    padding-top: 0;
+  }
+  .features-timeline::-webkit-scrollbar {
+    display: none;
+  }
+  .features-timeline {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .timeline-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    flex: 1 0 auto; /* Remove o flex:1 do mobile para que não esmague os textos */
+    padding: 0;
+  }
+
+  .timeline-bar {
+    width: 20px; /* Barra encolhida inativa */
+    transition:
+      width 0.4s ease,
+      background-color 0.4s ease;
+  }
+  .timeline-item.active .timeline-bar {
+    width: 100%; /* Estica a barra inteira quando ativo */
+  }
+
+  /* Volta a mostrar os textos no Desktop! */
+  .timeline-text {
+    display: block;
+    font-family: "Nunito", sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(120, 113, 108, 0.8);
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+  .timeline-item.active .timeline-text {
+    font-weight: 700;
+    color: var(--feat-dark);
+  }
+}
