@@ -116,7 +116,6 @@ export default function WaitlistPage() {
             </div>
           ) : (
             <div className="waitlist-success-card">
-              <div className="waitlist-success-icon">🌱</div>
               <p className="waitlist-success-title">You're on the list!</p>
               <p className="waitlist-success-desc">
                 Your spot is secured. Check your inbox for a welcome message

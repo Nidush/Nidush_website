@@ -2,8 +2,8 @@
 
 :root {
   --nav-bg: #f0f2eb;
-  --nav-dark-green: #1b3a2d;
-  --nav-green: #059669; /* Verde principal */
+  --nav-dark-green: #354F52;
+  --nav-green: #548F53; /* Verde principal */
   --nav-soft-green: #a7f3d0; /* Verde suave para bordas e fundos */
 }
 
@@ -228,3 +228,7 @@
 .nav-badge-mobile .nav-badge-text {
   font-size: 14px;
 }
+
+
+
+

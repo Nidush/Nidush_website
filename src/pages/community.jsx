@@ -1,5 +1,5 @@
 import "../styles/global.css";
-import "../styles/Community.css"; // A nossa nova stylesheet
+import "../styles/Community.css"; // Our new stylesheet
 import { useState, useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
@@ -38,7 +38,7 @@ function HeroCard({ post }) {
         <div>
           <div className="hero-meta">
             <span className={`tag-base ${palette}`}>
-              {post.subtitulo || "Destaque"}
+              {post.subtitulo || "Featured"}
             </span>
             <span className="hero-time">{readingMins(post.descrição)} min</span>
           </div>
@@ -46,7 +46,7 @@ function HeroCard({ post }) {
           <p className="hero-desc line-clamp-3">{post.descrição}</p>
         </div>
         <div className="hero-footer">
-          <span className="hero-footer-text">Ler agora</span>
+          <span className="hero-footer-text">Read now</span>
           <div className="hero-btn">
             <span>→</span>
           </div>
@@ -67,7 +67,7 @@ function TallCard({ post }) {
       <div className="tall-content">
         <div className="tall-meta">
           <span className={`tag-base ${palette}`}>
-            {post.subtitulo || "Artigo"}
+            {post.subtitulo || "Article"}
           </span>
           <span className="tall-time">{readingMins(post.descrição)} min</span>
         </div>
@@ -75,7 +75,7 @@ function TallCard({ post }) {
         <p className="tall-desc line-clamp-5">{post.descrição}</p>
 
         <div className="tall-footer">
-          <span className="tall-footer-text">Ler artigo</span>
+          <span className="tall-footer-text">Read article</span>
           <span className="tall-arrow">→</span>
         </div>
       </div>
@@ -94,7 +94,7 @@ function WideCard({ post }) {
       <div className="wide-content">
         <div className="wide-meta">
           <span className={`tag-base ${palette}`}>
-            {post.subtitulo || "Artigo"}
+            {post.subtitulo || "Article"}
           </span>
           <span className="wide-time">{readingMins(post.descrição)} min</span>
         </div>
@@ -116,14 +116,14 @@ function MiniCard({ post, index }) {
     <div className="mini-card">
       <div className="mini-meta">
         <span className={`tag-base ${palette}`}>
-          {post.subtitulo || "Artigo"}
+          {post.subtitulo || "Article"}
         </span>
         <span className="mini-number">{num}</span>
       </div>
       <h2 className="mini-title line-clamp-2">{post.titulo}</h2>
       <p className="mini-desc line-clamp-3">{post.descrição}</p>
       <div className="mini-footer">
-        <span className="mini-footer-text">Ler</span>
+        <span className="mini-footer-text">Read</span>
         <span className="mini-arrow">→</span>
       </div>
     </div>
@@ -143,7 +143,7 @@ export default function Community() {
           querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })),
         );
       } catch (error) {
-        console.error("Erro ao buscar os posts: ", error);
+        console.error("Error fetching posts: ", error);
       } finally {
         setLoading(false);
       }
@@ -169,13 +169,13 @@ export default function Community() {
 
           <div className="header-title-wrapper">
             <h1 className="header-title">
-              Ideias para o teu{" "}
+              Ideas for your{" "}
               <span className="header-title-highlight">
-                <span>bem‑estar.</span>
+                <span>well-being.</span>
               </span>
             </h1>
             <p className="header-subtitle">
-              Artigos e rotinas para transformar o teu dia‑a‑dia.
+              Articles and routines to transform your everyday life.
             </p>
           </div>
         </div>
@@ -213,7 +213,7 @@ export default function Community() {
         {!loading && posts.length === 0 && (
           <div className="empty-state">
             <div className="empty-icon">✦</div>
-            <p className="empty-text">Ainda não há publicações disponíveis.</p>
+            <p className="empty-text">There are no posts available yet.</p>
           </div>
         )}
       </div>

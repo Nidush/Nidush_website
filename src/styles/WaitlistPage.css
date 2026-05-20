@@ -2,13 +2,13 @@
 
 :root {
   --color-bg: #f5f7f2;
-  --color-dark: #1b3a2d;
+  --color-dark: #354f52;
   --emerald-50: #ecfdf5;
   --emerald-100: #d1fae5;
   --emerald-300: #6ee7b7;
   --emerald-400: #34d399;
-  --emerald-500: #10b981;
-  --emerald-600: #059669;
+  --emerald-500: #548f53;
+  --emerald-600: #548f53;
   --emerald-700: #047857;
   --teal-50: #f0fdfa;
   --stone-500: #78716c;
@@ -75,7 +75,7 @@
 }
 
 .waitlist-title {
-  font-weight: 900;
+  font-weight: 800;
   font-size: clamp(2rem, 5vw, 3.2rem);
   color: var(--color-dark);
   line-height: 1.1;
@@ -144,9 +144,8 @@
   font-family: inherit;
 }
 .waitlist-btn:hover:not(:disabled) {
-  background-color: var(--emerald-700);
+  background-color: var(--emerald-500);
   transform: translateY(-2px);
-  box-shadow: 0 12px 25px rgba(5, 150, 105, 0.4);
 }
 .waitlist-btn:disabled {
   opacity: 0.7;
@@ -186,7 +185,7 @@
   margin-bottom: 16px;
 }
 .waitlist-success-title {
-  font-weight: 900;
+  font-weight: 800;
   color: var(--color-dark);
   font-size: 1.25rem;
   margin-bottom: 8px;
@@ -274,7 +273,7 @@
 
 .visual-message-title {
   color: var(--color-dark);
-  font-weight: 900;
+  font-weight: 800;
   font-size: 1.25rem;
   margin-bottom: 12px;
   line-height: 1.3;

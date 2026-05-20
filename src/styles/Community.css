@@ -3,15 +3,15 @@
 /* Cores Base para facilitar a manutenção */
 :root {
   --color-bg: #f5f7f2;
-  --color-dark: #1b3a2d;
+  --color-dark: #354F52;
 
   --emerald-50: #ecfdf5;
   --emerald-100: #d1fae5;
   --emerald-200: #a7f3d0;
   --emerald-300: #6ee7b7;
   --emerald-400: #34d399;
-  --emerald-500: #10b981;
-  --emerald-600: #059669;
+  --emerald-500: #548F53;
+  --emerald-600: #548F53;
   --emerald-700: #047857;
 
   --stone-100: #f5f5f4;
@@ -79,7 +79,7 @@
 }
 .header-label {
   color: var(--emerald-600);
-  font-weight: 900;
+  font-weight: 800;
   font-size: 11px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -99,7 +99,7 @@
 }
 
 .header-title {
-  font-weight: 900;
+  font-weight: 800;
   font-size: clamp(2.4rem, 5vw, 4rem);
   color: var(--color-dark);
   line-height: 1.05;
@@ -200,7 +200,7 @@
 /* Paleta de Cores Dinâmicas das Tags */
 .tag-base {
   font-size: 10px;
-  font-weight: 900;
+  font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.14em;
   padding: 6px 12px;
@@ -287,7 +287,7 @@
   top: 24px;
   right: 32px;
   font-size: 7rem;
-  font-weight: 900;
+  font-weight: 800;
   color: rgba(255, 255, 255, 0.05);
   line-height: 1;
   user-select: none;
@@ -315,7 +315,7 @@
 }
 .hero-title {
   color: white;
-  font-weight: 900;
+  font-weight: 800;
   font-size: clamp(1.6rem, 3vw, 2.4rem);
   line-height: 1.15;
   letter-spacing: -0.03em;
@@ -339,7 +339,7 @@
 }
 .hero-footer-text {
   color: var(--emerald-300);
-  font-weight: 900;
+  font-weight: 800;
   font-size: 14px;
   letter-spacing: 0.025em;
 }
@@ -356,7 +356,7 @@
 .hero-btn span {
   color: var(--emerald-300);
   font-size: 14px;
-  font-weight: 900;
+  font-weight: 800;
   transition: color 0.3s;
 }
 .hero-card:hover .hero-btn {
@@ -427,7 +427,7 @@
 }
 .tall-title {
   color: var(--color-dark);
-  font-weight: 900;
+  font-weight: 800;
   font-size: 20px;
   line-height: 1.3;
   letter-spacing: -0.025em;
@@ -452,7 +452,7 @@
 }
 .tall-footer-text {
   color: var(--emerald-600);
-  font-weight: 900;
+  font-weight: 800;
   font-size: 12px;
   letter-spacing: 0.025em;
   text-transform: uppercase;
@@ -509,7 +509,7 @@
 }
 .wide-icon span {
   color: white;
-  font-weight: 900;
+  font-weight: 800;
   font-size: 24px;
 }
 
@@ -532,7 +532,7 @@
 }
 .wide-title {
   color: var(--color-dark);
-  font-weight: 900;
+  font-weight: 800;
   font-size: 18px;
   line-height: 1.3;
   letter-spacing: -0.025em;
@@ -564,7 +564,7 @@
 .wide-btn span {
   color: var(--emerald-600);
   font-size: 14px;
-  font-weight: 900;
+  font-weight: 800;
   transition: color 0.3s;
 }
 .wide-card:hover .wide-btn {
@@ -601,12 +601,12 @@
 }
 .mini-number {
   color: var(--stone-200);
-  font-weight: 900;
+  font-weight: 800;
   font-size: 20px;
 }
 .mini-title {
   color: var(--color-dark);
-  font-weight: 900;
+  font-weight: 800;
   font-size: 16px;
   line-height: 1.3;
   letter-spacing: -0.025em;
@@ -633,7 +633,7 @@
 }
 .mini-footer-text {
   color: var(--emerald-600);
-  font-weight: 900;
+  font-weight: 800;
   font-size: 11px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -690,3 +690,7 @@
   font-weight: 700;
   font-size: 14px;
 }
+
+
+
+

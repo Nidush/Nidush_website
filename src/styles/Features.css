@@ -2,8 +2,8 @@
 
 :root {
   --feat-bg: #f0f2eb;
-  --feat-dark: #1b3a2d;
-  --feat-green: #059669;
+  --feat-dark: #354F52;
+  --feat-green: #548F53;
   --feat-soft: rgba(167, 243, 208, 0.7);
   --feat-text-light: #78716c;
 }
@@ -256,3 +256,7 @@
     color: var(--feat-dark);
   }
 }
+
+
+
+
