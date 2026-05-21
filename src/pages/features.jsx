@@ -324,85 +324,75 @@ const stickyStyle = `
 
 
   /* =================================================================
-     MOBILE - AJUSTADO PARA ECRÃ A 100% SEM SCROLL VERTICAL
+     MOBILE
      ================================================================= */
   @media (max-width: 900px) {
-    /* 1. Bloquear o tamanho exato da viewport usando dvh */
-    .features-wrapper {
-      height: 100vh;
-      height: 100dvh; 
-      overflow: hidden; 
-    }
+    .features-header { padding-top: 90px; padding-bottom: 10px; }
 
-    /* 2. Conteúdo em Flex para absorver Navbar + Espaço restante */
-    .content-layer {
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      padding-top: 70px; /* Alocação para a navbar */
-    }
-
-    /* Header Compacto (Não comprime com o flex-shrink) */
-    .features-header { 
-      padding: 12px clamp(1rem, 5vw, 2rem) 8px; 
-      flex-shrink: 0;
-    }
-
-    /* 3. Containers de Fundo convertidos para absolutos sobre o 100vh */
+    /* bg-layer cobre a secção inteira */
     .bg-layer {
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
     }
+
+    /* bg-sticky cola-se logo abaixo da navbar (70px) e ocupa
+       o ecrã inteiro restante — a aurora fica full-screen */
     .bg-sticky {
-      position: absolute; /* Não precisamos do sticky já que a secção não tem scroll vertical */
+      position: sticky;
       top: 70px;
-      height: calc(100% - 70px);
+      height: calc(100vh - 70px);
       width: 100%;
       overflow: hidden;
     }
 
-    /* Aurora e efeitos ocupam devidamente os painéis */
+    /* Aurora: ocupa 100% do bg-sticky — ecrã inteiro abaixo da navbar */
     .bg-effect--aurora {
       top: 0;
       height: 100%;
     }
+
+    /* Activities, devices e avatars: deslocados 38% para baixo (altura do mockup)
+       para não ficarem escondidos por trás do mockup */
     .bg-effect:not(.bg-effect--aurora) {
-      top: 40%;
-      height: 60%;
+      top: 38%;
+      height: 62%;
     }
 
-    /* 4. A Caixa de Scroll Principal preenche todo o espaço vertical livre do ecra */
+    /* scroll-container ocupa exactamente o ecrã disponível abaixo da navbar,
+       empilhado em coluna — mockup em cima, cards em baixo, sem espaço sobrante */
     .scroll-container {
       flex-direction: column;
-      flex: 1; 
       padding-bottom: 0;
-      height: auto;
-      overflow: hidden; 
+      height: calc(100vh - 70px);
+      overflow: hidden;
     }
 
-    /* 5. Ajuste Mockup - ocupa proporcionalmente uma área no ecrã (ex: 42%) */
+    /* mockup: 38% da altura disponível */
     .sticky-visual {
       display: flex !important;
       position: relative;
       top: 0;
       width: 100%;
-      height: 42%; 
+      height: 38%;
       flex-shrink: 0;
       z-index: 25;
       background: transparent;
-      padding: 5px 0;
+      padding: 8px 0 4px;
     }
 
+    /* mockup-container: cresce até encher a altura da sticky-visual,
+       mantendo aspect-ratio — não excede nem deixa gap */
     .mockup-container {
       height: 100%;
       width: auto;
       aspect-ratio: 1 / 2;
     }
 
-    /* Notificação e restantes elementos mobile continuam perfeitamente ajustados */
+    /* FIX 2: notificação JITAI reposicionada relativa à sticky-visual
+       em vez do mockup-container — proporcional ao ecrã */
     .jitai-notification {
       position: absolute;
-      top: 2px;
+      top: 6px;
       left: 50%;
       transform: translateX(-50%) translateY(-10px);
       width: min(78vw, 320px);
@@ -460,7 +450,7 @@ const stickyStyle = `
       100% { transform: translate(14px, -20px) scale(0.85); }
     }
 
-    /* 6. TRACK HORIZONTAL (Cartões flexiveis absorvem tudo abaixo do telemóvel) */
+    /* TRACK HORIZONTAL — ocupa os 62% restantes abaixo do mockup */
     .scrolling-content {
       width: 100% !important;
       flex: 1 !important;
@@ -491,7 +481,7 @@ const stickyStyle = `
     .feature-step.is-active { opacity: 1; }
 
     .feature-text-content {
-      padding: 20px;
+      padding: 22px;
       border-radius: 24px;
       background: rgba(255, 255, 255, 0.22) !important;
       backdrop-filter: blur(28px) !important;
@@ -505,11 +495,10 @@ const stickyStyle = `
     }
 
     .feature-icon  { width: 44px; height: 44px; font-size: 1.4rem; margin-bottom: 10px; }
-    /* Ajuste de tipografia para libertar espaço na bolha */
-    .feature-title { font-size: 1.15rem; margin-bottom: 8px; line-height: 1.2; }
-    .feature-desc  { font-size: 0.9rem; line-height: 1.45; }
+    .feature-title { font-size: 1.2rem; margin-bottom: 8px; }
+    .feature-desc  { font-size: 0.95rem; line-height: 1.5; }
 
-    /* DOTS */
+    /* DOTS — margin compacto para não sair fora do ecrã */
     .mobile-carousel-indicators {
       display: flex;
       justify-content: center;
@@ -698,14 +687,14 @@ export default function FeaturesSection() {
                 ? "rgba(255,255,255,0.1)"
                 : colors.softGreen + "44",
               borderRadius: 50,
-              padding: "6px 16px",
-              marginBottom: 16,
+              padding: "8px 20px",
+              marginBottom: 20,
               border: isDarkMode ? "1px solid rgba(255,255,255,0.2)" : "none",
             }}
           >
             <span
               style={{
-                fontSize: 12,
+                fontSize: 13,
                 fontWeight: 700,
                 color: isDarkMode ? "#00ffcc" : colors.green,
               }}
@@ -715,8 +704,7 @@ export default function FeaturesSection() {
           </div>
           <h2
             style={{
-              fontSize:
-                "clamp(2rem, 7vw, 4rem)" /* Ligeiramente mais pequeno em mobile para poupar espaço */,
+              fontSize: "clamp(2.5rem, 5vw, 4rem)",
               fontWeight: 800,
               lineHeight: 1.1,
             }}
@@ -729,7 +717,11 @@ export default function FeaturesSection() {
         </div>
 
         <div className="scroll-container">
+          {/* sticky-visual é agora o pai da notificação em mobile */}
           <div className="sticky-visual">
+            {/* FIX 2: JitaiNotification movida para dentro da sticky-visual
+                mas fora do mockup-container — assim o posicionamento em mobile
+                é relativo à zona visual inteira e não ao container minúsculo */}
             <JitaiNotification isActive={activeIndex === 0} />
 
             <div className="mockup-container">
