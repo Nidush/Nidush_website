@@ -1,7 +1,7 @@
 import Index from "./pages";
 import "./styles/global.css";
 import Community from "./pages/community";
-import Features from "./pages/features";
+import FeaturesPage from "./pages/features";
 import AboutUs from "./pages/aboutUs";
 import WaitlistPage from "./pages/waitlistPage";
 import NavBar from "./components/NavBar";
@@ -18,7 +18,7 @@ export default function App() {
         <Route path="/" element={<Index />} />
 
         {/* Rota para outra página (exemplo: "/contactos") */}
-        <Route path="/features" element={<Features />} />
+        <Route path="/features" element={<FeaturesPage />} />
         <Route path="/community" element={<Community />} />
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/waitlist" element={<WaitlistPage />} />

@@ -26,14 +26,18 @@ export default function Wave({
           transform: flip ? "scaleY(-1)" : "none",
         }}
       >
-        <div style={{ position: "relative", height: "140px" }}>
-          {/* Onda 1 */}
+        {/* Altura ligeiramente maior na base para dar mais corpo antes do zoom */}
+        <div
+          style={{ position: "relative", height: "clamp(90px, 12vw, 150px)" }}
+        >
+          {/* Onda 1 - Abrandada para 22 segundos para fluidez relaxante */}
           <div
             style={{
               display: "flex",
               width: "200%",
               position: "absolute",
-              animation: "wave1 8s linear infinite",
+              height: "100%",
+              animation: "wave1 22s linear infinite",
             }}
           >
             {[0, 1].map((i) => (
@@ -41,7 +45,13 @@ export default function Wave({
                 key={i}
                 viewBox="0 0 1440 140"
                 xmlns="http://www.w3.org/2000/svg"
-                style={{ display: "block", width: "50%", flexShrink: 0 }}
+                preserveAspectRatio="none"
+                style={{
+                  display: "block",
+                  width: "50%",
+                  height: "100%",
+                  flexShrink: 0,
+                }}
               >
                 <path
                   d="M0,70 C240,140 480,0 720,70 C960,140 1200,0 1440,70 L1440,140 L0,140 Z"
@@ -52,14 +62,15 @@ export default function Wave({
             ))}
           </div>
 
-          {/* Onda 2 (sobreposta, velocidade diferente) */}
+          {/* Onda 2 - Abrandada para 28 segundos */}
           <div
             style={{
               display: "flex",
               width: "200%",
               position: "absolute",
+              height: "100%",
               top: 0,
-              animation: "wave2 12s linear infinite reverse",
+              animation: "wave2 28s linear infinite reverse",
             }}
           >
             {[0, 1].map((i) => (
@@ -67,7 +78,13 @@ export default function Wave({
                 key={i}
                 viewBox="0 0 1440 140"
                 xmlns="http://www.w3.org/2000/svg"
-                style={{ display: "block", width: "50%", flexShrink: 0 }}
+                preserveAspectRatio="none"
+                style={{
+                  display: "block",
+                  width: "50%",
+                  height: "100%",
+                  flexShrink: 0,
+                }}
               >
                 <path
                   d="M0,95 C360,40 720,120 1080,60 C1260,30 1380,90 1440,95 L1440,140 L0,140 Z"

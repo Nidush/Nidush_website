@@ -1,30 +1,114 @@
 import lettering from "../assets/lettering_nidush.png";
+import { colors, fonts } from "../styles/theme";
+
+const trailerStyle = `
+  /* --- REGRAS PARA DESKTOP (PC) --- */
+  .trailer-section {
+    scroll-margin-top: 40px; /* Ajuda na navegação por âncoras (#trailer) */
+    min-height: calc(100vh - 70px);
+    padding: 96px clamp(1.5rem, 5vw, 4rem);
+    background-color: ${colors.beige || "#f0f2eb"};
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .trailer-content {
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .trailer-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .trailer-title {
+    font-weight: 800;
+    font-size: clamp(1.75rem, 4vw, 3rem);
+    color: ${colors.darkGreen || "#354F52"};
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+  }
+
+  .trailer-lettering {
+    width: 256px;
+    height: auto;
+  }
+
+  .trailer-video-wrapper {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 24px 48px rgba(2, 44, 34, 0.15);
+    background-color: black;
+    position: relative;
+    margin-top: 50px;
+  }
+
+  .trailer-iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  /* --- REGRAS PARA MOBILE & TABLETS --- */
+  @media (max-width: 768px) {
+    .trailer-section {
+      min-height: auto;
+      padding-top: 64px;
+      padding-bottom: 64px;
+    }
+    
+    .trailer-header {
+      gap: 8px; /* Menos espaço entre título e imagem no telemóvel */
+    }
+    
+    .trailer-lettering {
+      width: 192px; /* Imagem ligeiramente mais pequena */
+    }
+    
+    .trailer-video-wrapper {
+      border-radius: 16px; /* Cantos menos arredondados em ecrãs pequenos */
+      box-shadow: 0 16px 32px rgba(2, 44, 34, 0.1);
+      margin-top: 40px;
+    }
+  }
+`;
 
 export default function TrailerSection() {
   return (
-    <section
-      id="trailer"
-      className="scroll-mt-10 min-h-[calc(120vh-70px)] px-6 md:px-12 lg:px-16 pt-24 pb-24 bg-[#f0f2eb] flex flex-col items-center justify-start"
-    >
-      {/* Adicionei gap-[100px] para forçar 100px de espaço entre tudo o que estiver aqui dentro */}
-      <div className="w-full max-w-[800px] flex flex-col items-center text-center">
+    <section id="trailer" className="trailer-section">
+      <style>{trailerStyle}</style>
+
+      <div className="trailer-content">
         {/* BLOCO 1: Título e Lettering */}
-        {/* Adicionei gap-4 para dar um espacinho entre o título e a imagem */}
-        <div className="flex flex-col items-center gap-2">
-          <h2 className="font-extrabold text-[clamp(2rem,3.5vw,3rem)] text-[#354F52] tracking-tight leading-tight">
+        <div className="trailer-header">
+          <h2 className="trailer-title" style={{ fontFamily: fonts.main }}>
             Discover more about
           </h2>
-          <img src={lettering} alt="Nidush Lettering" className="w-64 h-auto" />
+          <img
+            src={lettering}
+            alt="Nidush Lettering"
+            className="trailer-lettering"
+          />
         </div>
 
         {/* BLOCO 2: Contentor do Vídeo */}
-        {/* Adicionei style inline como plano de segurança. É impossível o browser ignorar isto. */}
-        <div
-          className="w-full aspect-video rounded-3xl overflow-hidden shadow-[0_24px_48px_rgba(2,44,34,0.15)] bg-black relative"
-          style={{ marginTop: "50px" }}
-        >
+        <div className="trailer-video-wrapper">
           <iframe
-            className="absolute top-0 left-0 w-full h-full border-none"
+            className="trailer-iframe"
             src="https://www.youtube.com/embed/tIzNWHl0EMA?rel=0&modestbranding=1"
             title="Nidush Trailer"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

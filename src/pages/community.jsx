@@ -159,11 +159,6 @@ export default function Community() {
         {/* Header */}
         <div className="header-section">
           <div className="header-label-container">
-            <div className="header-dots">
-              <span className="dot-1" />
-              <span className="dot-2" />
-              <span className="dot-3" />
-            </div>
             <p className="header-label">Nidush Community</p>
           </div>
 

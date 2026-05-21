@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom"; // Importado para permitir a navegação de páginas
 import Wave from "./Wave";
 import { colors, fonts } from "../styles/theme";
 import mockup from "../assets/mockup_nidush.png";
@@ -11,7 +12,6 @@ const QUESTIONS = [
 ];
 
 const heroStyle = `
-  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
   @keyframes fadeInLeft {
     from { opacity: 0; transform: translateX(-32px); }
     to   { opacity: 1; transform: translateX(0); }
@@ -20,16 +20,62 @@ const heroStyle = `
     from { opacity: 0; transform: translateX(32px) rotate(6deg); }
     to   { opacity: 1; transform: translateX(0) rotate(6deg); }
   }
-  @media (max-width: 768px) {
-    .hero-inner { flex-direction: column !important; text-align: center !important; }
-    .hero-text  { align-items: center !important; }
-    .hero-image { margin-top: 40px; transform: rotate(0deg) !important; }
+  
+  /* --- REGRAS PARA DESKTOP (PC) --- */
+  .hero-section {
+    height: 100vh;
+    padding: 70px clamp(1.5rem, 5vw, 4rem) 0;
+  }
+  
+  .wave-wrapper {
+    transform: scale(1.35); 
+    transform-origin: bottom center;
+  }
+
+  /* --- REGRAS PARA MOBILE & TABLETS --- */
+  @media (max-width: 900px) {
+    .hero-section {
+      height: auto !important;
+      min-height: 100vh !important;
+      padding-top: 110px !important;
+      padding-bottom: 80px !important; 
+    }
+    
+    .wave-wrapper {
+      transform: scale(2.8) !important; 
+    }
+
+    .hero-inner { 
+      flex-direction: column !important; 
+      text-align: center !important; 
+      gap: 2.5rem !important;
+    }
+    .hero-text { 
+      align-items: center !important; 
+    }
+    .hero-question p, .hero-subtitle {
+      text-align: center !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+    .hero-buttons {
+      justify-content: center !important;
+    }
+    .hero-image { 
+      margin-top: 20px !important; 
+      margin-bottom: -40px !important; 
+      transform: rotate(0deg) !important; 
+    }
+    .ambient-blob {
+      transform: scale(0.6);
+    }
   }
 `;
 
 export default function HeroSection() {
   const [questionIdx, setQuestionIdx] = useState(0);
   const [visible, setVisible] = useState(true);
+  const navigate = useNavigate(); // Inicialização do Hook de navegação
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -44,14 +90,14 @@ export default function HeroSection() {
 
   return (
     <section
+      className="hero-section"
       style={{
-        minHeight: "100vh",
+        boxSizing: "border-box",
         background: `linear-gradient(155deg, ${colors.beige} 0%, ${colors.white} 55%, ${colors.lightGreen} 100%)`,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        padding: "70px clamp(1.5rem, 5vw, 4rem) 0",
         position: "relative",
         overflow: "hidden",
       }}
@@ -60,6 +106,7 @@ export default function HeroSection() {
 
       {/* Ambient blobs */}
       <div
+        className="ambient-blob"
         style={{
           position: "absolute",
           top: "8%",
@@ -70,9 +117,11 @@ export default function HeroSection() {
           background: `radial-gradient(circle, ${colors.softGreen}28 0%, transparent 70%)`,
           filter: "blur(50px)",
           pointerEvents: "none",
+          zIndex: 0,
         }}
       />
       <div
+        className="ambient-blob"
         style={{
           position: "absolute",
           bottom: "18%",
@@ -83,6 +132,7 @@ export default function HeroSection() {
           background: `radial-gradient(circle, ${colors.green}12 0%, transparent 70%)`,
           filter: "blur(70px)",
           pointerEvents: "none",
+          zIndex: 0,
         }}
       />
 
@@ -90,14 +140,14 @@ export default function HeroSection() {
       <div
         className="hero-inner"
         style={{
-          maxWidth: 1100,
+          maxWidth: 1200,
           width: "100%",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
           gap: "clamp(2rem, 6vw, 5rem)",
           position: "relative",
-          zIndex: 1,
+          zIndex: 10,
         }}
       >
         {/* LEFT — texto */}
@@ -111,17 +161,14 @@ export default function HeroSection() {
             animation: "fadeInLeft 0.8s ease both",
           }}
         >
-          {/* Coming Soon badge */}
-
-          {/* Headline */}
           <h1
             style={{
               fontFamily: fonts.main,
               fontWeight: 800,
-              fontSize: "clamp(2.6rem, 5.5vw, 4.4rem)",
+              fontSize: "clamp(2.4rem, 5vw, 4.4rem)",
               color: colors.darkGreen,
               lineHeight: 1.1,
-              marginBottom: 24,
+              marginBottom: 20,
               letterSpacing: "-0.03em",
             }}
           >
@@ -132,11 +179,13 @@ export default function HeroSection() {
 
           {/* Rotating question */}
           <div
+            className="hero-question"
             style={{
-              minHeight: 72,
+              minHeight: 60,
               display: "flex",
               alignItems: "center",
-              marginBottom: 28,
+              marginBottom: 20,
+              width: "100%",
             }}
           >
             <p
@@ -157,14 +206,14 @@ export default function HeroSection() {
             </p>
           </div>
 
-          {/* Subline */}
           <p
+            className="hero-subtitle"
             style={{
               fontFamily: fonts.main,
               fontSize: "clamp(0.95rem, 1.8vw, 1.05rem)",
               color: colors.textLight,
               maxWidth: 460,
-              margin: "0 0 44px",
+              margin: "0 0 36px",
               lineHeight: 1.75,
             }}
           >
@@ -172,9 +221,17 @@ export default function HeroSection() {
             home to how you feel.
           </p>
 
-          {/* CTAs */}
-          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+          <div
+            className="hero-buttons"
+            style={{
+              display: "flex",
+              gap: 12,
+              flexWrap: "wrap",
+              width: "100%",
+            }}
+          >
             <button
+              onClick={() => navigate("/waitlist")} // Navega para a página /waitlist
               style={{
                 background: colors.green,
                 color: "white",
@@ -200,6 +257,13 @@ export default function HeroSection() {
               Join the waitlist
             </button>
             <button
+              onClick={() => {
+                // Faz um scroll suave exato de 1 ecrã para baixo (ou para um ID se preferires)
+                window.scrollTo({
+                  top: window.innerHeight,
+                  behavior: "smooth",
+                });
+              }}
               style={{
                 background: "transparent",
                 color: colors.darkGreen,
@@ -240,8 +304,9 @@ export default function HeroSection() {
             src={mockup}
             alt="App mockup"
             style={{
-              width: "clamp(200px, 22vw, 280px)",
-              height: "auto",
+              width: "clamp(240px, 35vw, 460px)",
+              maxHeight: "82vh",
+              objectFit: "contain",
               borderRadius: 36,
               display: "block",
             }}
@@ -250,7 +315,17 @@ export default function HeroSection() {
       </div>
 
       {/* Wave transition */}
-      <div style={{ position: "absolute", bottom: 0, left: 0, right: 0 }}>
+      <div
+        className="wave-wrapper"
+        style={{
+          position: "absolute",
+          bottom: "-2px",
+          left: 0,
+          right: 0,
+          zIndex: 1,
+          lineHeight: 0,
+        }}
+      >
         <Wave />
       </div>
     </section>

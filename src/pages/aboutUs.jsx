@@ -1,8 +1,8 @@
-import "../styles/global.css"; // Ensure you have the base imports
-import "../styles/AboutUs.css"; // Import our new CSS
-import pedro_perfil from "../assets/foto_perfil_linkedin2.png"; // Example image import
-import gabriel_perfil from "../assets/perfil_gabriel.jpg"; // Example image import
-import duda_perfil from "../assets/duda_perfil.jpg"; // Example image import
+import "../styles/global.css";
+import "../styles/AboutUs.css";
+import pedro_perfil from "../assets/foto_perfil_linkedin2.png";
+import gabriel_perfil from "../assets/perfil_gabriel.jpg";
+import duda_perfil from "../assets/duda_perfil.jpg";
 
 // Team data
 const TEAM = [
@@ -10,7 +10,7 @@ const TEAM = [
     id: 1,
     name: "Eduarda Carvalho",
     role: "Design & UX Research",
-    image: duda_perfil, // Avatar placeholder generated dynamically with Nidush colors
+    image: duda_perfil,
   },
   {
     id: 2,
@@ -22,7 +22,6 @@ const TEAM = [
     id: 3,
     name: "Pedro Teixeira",
     role: "Developer & UI/UX",
-    // Avatar placeholder generated dynamically with Nidush colors
     image: pedro_perfil,
   },
 ];
@@ -38,12 +37,12 @@ export default function AboutUs() {
           </div>
 
           <h1 className="about-title">
-            Technology serving your <span>balance.</span>
+            Your home as an <span>active ecosystem.</span>
           </h1>
           <p className="about-subtitle">
-            We believe technology in our homes should not be a source of stress
-            or distraction. It should be invisible, intuitive, and designed to
-            give us peace.
+            We believe technology shouldn't just automate tasks—it should
+            regulate stress and anxiety. Nidush transforms your home into a
+            sensory sanctuary that adapts to how you feel.
           </p>
         </div>
 
@@ -52,24 +51,27 @@ export default function AboutUs() {
           {/* Larger Card: The Mission */}
           <div className="vision-card-main">
             <div className="vision-glow" />
-            <h2>Turning houses into true sanctuaries.</h2>
+            <h2>A sanctuary that breathes with you.</h2>
             <p>
-              Nidush was born from the desire to create a domestic environment
-              that breathes with you. Instead of hundreds of notifications and
-              complex controls, we developed an ecosystem that understands how
-              you feel and adjusts your home automatically for what you need
-              most: focus, rest, or energy.
+              Nidush was born from the need to leave chaos at the door. By
+              utilizing{" "}
+              <strong>JITAI (Just-In-Time Adaptive Interventions)</strong> and
+              biometric data from your smartwatch, Nidush detects anxiety peaks
+              before you even realize them. It automatically harmonizes
+              lighting, sound, and aroma to provide exactly what you need at
+              that exact moment: deep rest, focus, or gentle energy.
             </p>
           </div>
 
           {/* Smaller Cards: The Values */}
           <div className="vision-values">
             <div className="value-card">
-              <div className="value-icon">🌿</div>
-              <h3 className="value-title">Well-being First</h3>
+              <div className="value-icon">🧠</div>
+              <h3 className="value-title">Biometric Empathy</h3>
               <p className="value-desc">
-                Everything we build has a single goal: caring for your mental
-                and physical health through your environment.
+                Your environment responds to your body. By reading Heart Rate
+                and Stress Scores, the house proactively cares for your mental
+                well-being.
               </p>
             </div>
 
@@ -77,8 +79,8 @@ export default function AboutUs() {
               <div className="value-icon">✨</div>
               <h3 className="value-title">Invisible Design</h3>
               <p className="value-desc">
-                The best interfaces are the ones you don't need to use. Nidush
-                works silently in the background.
+                No complex dashboards or intrusive alerts. Nidush works silently
+                in the background, making peace feel completely effortless.
               </p>
             </div>
           </div>
