@@ -5,7 +5,7 @@ import QuoteSection from "../components/QuoteSection";
 import SpotifySection from "../components/SpotifySection";
 import WaitlistSection from "../components/WaitlistSection";
 import Footer from "../components/Footer";
-import ScrollToTopButton from "../components/ScrolltoTopButton";
+import ScrollToTopButton from "../components/ScrollToTopButton";
 import TrailerSection from "../components/TrailerSection";
 
 export default function Index() {
