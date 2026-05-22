@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import { colors, fonts } from "../styles/theme";
+import { colors } from "../styles/theme";
+import "../styles/FeaturesPage.css";
 
 import mockup1 from "../assets/mockup_nidush.png";
 import mockup2 from "../assets/mockup_activities.png";
@@ -55,481 +56,6 @@ const FEATURES = [
     image: mockup5,
   },
 ];
-
-const stickyStyle = `
-  /* --- WRAPPER --- */
-  .features-wrapper {
-    background-color: ${colors.beige};
-    font-family: ${fonts.main}, sans-serif;
-    color: ${colors.darkGreen};
-    transition: background-color 1s ease, color 1s ease;
-    position: relative;
-  }
-  .features-wrapper.dark-mode {
-    background-color: #0b1121;
-    color: #ffffff;
-  }
-
-  /* --- FUNDO --- */
-  .bg-layer {
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    z-index: 1;
-    pointer-events: none;
-    contain: paint;
-  }
-  .bg-sticky {
-    position: sticky;
-    top: 70px;
-    height: calc(100vh - 70px);
-    width: 100%;
-    overflow: hidden;
-  }
-  .bg-effect {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    opacity: 0;
-    transition: opacity 1s ease, transform 1s ease;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .bg-effect.active { opacity: 1; }
-
-  /* --- CONTEÚDO --- */
-  .content-layer {
-    position: relative;
-    z-index: 10;
-  }
-  .features-header {
-    padding: 100px clamp(1.5rem, 5vw, 4rem) 60px;
-    text-align: center;
-    max-width: 800px;
-    margin: 0 auto;
-  }
-
-  .scroll-container {
-    display: flex;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding-bottom: 40vh;
-  }
-
-  .sticky-visual {
-    position: sticky;
-    top: 70px;
-    height: calc(100vh - 70px);
-    width: 38%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    flex-shrink: 0;
-  }
-  .mockup-container {
-    position: relative;
-    width: clamp(150px, 16vw, 240px);
-    aspect-ratio: 1 / 2;
-    z-index: 2;
-  }
-  .mockup-image {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    object-fit: contain;
-    transition: opacity 0.8s ease, transform 0.8s ease;
-    filter: drop-shadow(0 32px 64px rgba(0,0,0,0.15));
-  }
-
-  /* --- NOTIFICAÇÃO JITAI (desktop) --- */
-  .jitai-notification {
-    position: absolute;
-    top: 15%;
-    left: 50%;
-    transform: translateX(-50%) translateY(-20px);
-    width: 92%;
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(15px);
-    padding: 14px;
-    border-radius: 22px;
-    border: 1px solid rgba(255,255,255,0.4);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-    z-index: 20;
-    opacity: 0;
-    transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    pointer-events: none;
-  }
-  .jitai-notification.active {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
-  .features-wrapper.dark-mode .jitai-notification {
-    background: rgba(15, 23, 42, 0.85);
-    border: 1px solid rgba(255,255,255,0.1);
-  }
-  .notif-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
-  .notif-app-icon {
-    width: 18px; height: 18px; background: ${colors.green}; border-radius: 5px;
-    display: flex; align-items: center; justify-content: center; font-size: 10px; color: white; font-weight: 900;
-  }
-  .notif-app-name { font-size: 11px; font-weight: 800; color: ${colors.darkGreen}; opacity: 0.6; letter-spacing: 0.05em; }
-  .features-wrapper.dark-mode .notif-app-name { color: #ffffff; }
-  .notif-text { font-size: 12px; line-height: 1.4; color: ${colors.darkGreen}; font-weight: 500; }
-  .features-wrapper.dark-mode .notif-text { color: rgba(255,255,255,0.9); }
-  .notif-suggestion { color: ${colors.green}; font-weight: 700; display: block; margin-top: 2px; }
-  .features-wrapper.dark-mode .notif-suggestion { color: #00ffcc; }
-
-  /* --- WEARABLE --- */
-  .jitai-zone {
-    position: absolute;
-    top: 50%; left: -75px;
-    transform: translateY(-50%);
-    opacity: 0; transition: opacity 0.5s ease;
-    pointer-events: none; z-index: 5;
-  }
-  .jitai-zone.active { opacity: 1; }
-  .jitai-wearable-local {
-    width: 100px; height: 100px;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .jitai-wearable-local img { width: 100% !important; height: 100% !important; }
-  .signal-waves-local {
-    position: absolute; top: 50%; left: 35px; transform: translateY(-50%);
-    width: 90px; height: 90px; border-radius: 50%;
-    border: 3px dashed ${colors.green};
-    animation: ping-local 2s cubic-bezier(0, 0, 0.2, 1) infinite;
-  }
-  @keyframes ping-local {
-    0% { transform: translateY(-50%) scale(0.3); opacity: 1; }
-    100% { transform: translateY(-50%) translateX(80px) scale(2); opacity: 0; }
-  }
-
-  .scrolling-content {
-    padding: 0 clamp(2rem, 4vw, 5rem) 0 clamp(4rem, 7vw, 9rem);
-    display: flex;
-    flex-direction: column;
-  }
-  .feature-step {
-    min-height: calc(100vh - 70px);
-    display: flex; flex-direction: column; justify-content: center;
-    transition: opacity 0.5s ease;
-    opacity: 0.3;
-  }
-  .feature-step.is-active { opacity: 1; }
-
-  .feature-text-content {
-    padding: clamp(24px, 3vw, 40px);
-    border-radius: 28px;
-    background: rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    border: 1px solid rgba(255, 255, 255, 0.22);
-    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.06);
-    transition: background 1s ease, border 1s ease;
-  }
-  .features-wrapper.dark-mode .feature-text-content {
-    background: rgba(11, 17, 33, 0.45);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
-  }
-
-  .feature-icon {
-    font-size: 2.5rem; margin-bottom: 24px;
-    background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.2);
-    width: 70px; height: 70px; border-radius: 20px;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .features-wrapper.dark-mode .feature-icon {
-    background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1);
-  }
-  .feature-title {
-    font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 800;
-    margin-bottom: 20px; line-height: 1.1; letter-spacing: -0.025em;
-  }
-  .feature-desc {
-    font-size: 1.1rem;
-    line-height: 1.75;
-    max-width: 100%;
-    opacity: 0.85;
-  }
-
-  /* --- ACTIVITIES GRID --- */
-  .activities-grid-fs {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    gap: clamp(20px, 3vw, 36px);
-    position: absolute;
-    width: 110%; height: 110%;
-    opacity: 0.13;
-    transform: rotate(-5deg) scale(1.05);
-  }
-  .activity-block-fs {
-    width: 100%; aspect-ratio: 1/1; border-radius: 24px; overflow: hidden;
-    background: ${colors.green}20; border: 1px solid ${colors.green}40;
-  }
-  .activity-block-fs img { width: 100%; height: 100%; object-fit: cover; }
-
-  /* --- AURORA --- */
-  .aurora-container-fs { position: absolute; width: 100%; height: 100%; top: 0; left: 0; }
-  .aurora-light-fs {
-    position: absolute; border-radius: 50%;
-    filter: blur(80px);
-    mix-blend-mode: plus-lighter;
-  }
-  .aurora-l-1 { width: 60vw; height: 60vw; background: #00ffcc; top: -20%; left: -20%; animation: aurora-move-1 12s infinite alternate ease-in-out; }
-  .aurora-l-2 { width: 70vw; height: 70vw; background: #9900ff; top: 20%; right: -30%; animation: aurora-move-2 16s infinite alternate ease-in-out; }
-  .aurora-l-3 { width: 55vw; height: 55vw; background: #1DB954; bottom: -30%; left: 10%; animation: aurora-move-3 20s infinite alternate ease-in-out; }
-  @keyframes aurora-move-1 { 0% { transform: translate(0,0); } 100% { transform: translate(30vw,20vh); } }
-  @keyframes aurora-move-2 { 0% { transform: translate(0,0); } 100% { transform: translate(-40vw,-10vh); } }
-  @keyframes aurora-move-3 { 0% { transform: translate(0,0); } 100% { transform: translate(20vw,-30vh); } }
-
-  /* --- DEVICE ICONS (Desktop) --- */
-  .device-icon-fs {
-    position: absolute; width: clamp(70px,6vw,90px); height: clamp(70px,6vw,90px);
-    background: white; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 12px 32px rgba(2,44,34,0.12);
-    animation: float-around 5s infinite ease-in-out alternate;
-    overflow: hidden; padding: 16px; border: 1px solid rgba(0,0,0,0.03);
-  }
-  .device-icon-fs img { width: 100%; height: 100%; object-fit: contain; }
-  .d-1 { top: 15%; left: 5%; }
-  .d-2 { bottom: 20%; left: 10%; }
-  .d-3 { top: 25%; right: 10%; }
-  .d-4 { bottom: 15%; right: 5%; }
-
-  /* --- AVATARS (Desktop) --- */
-  .social-avatar-fs {
-    position: absolute; display: flex; flex-direction: column; align-items: center; gap: 8px;
-    animation: float-around 6s infinite ease-in-out alternate;
-  }
-  .avatar-circle-fs {
-    width: 90px; height: 90px; background: ${colors.softGreen}; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center; font-size: 2.5rem;
-    border: 4px solid white; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-  }
-  .avatar-label-fs {
-    background: white; color: ${colors.darkGreen}; padding: 8px 16px;
-    border-radius: 20px; font-size: 0.85rem; font-weight: 700;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-  }
-  .s-1 { top: 15%; left: 3%; }
-  .s-2 { bottom: 10%; left: 8%; }
-  .s-3 { top: 45%; right: 3%; }
-  .s-4 { bottom: 25%; right: 15%; }
-
-  @keyframes float-around {
-    0% { transform: translate(0,0); }
-    100% { transform: translate(25px,-25px); }
-  }
-
-
-  /* =================================================================
-     MOBILE
-     ================================================================= */
-  @media (max-width: 900px) {
-    .features-header { padding-top: 90px; padding-bottom: 10px; }
-
-    /* bg-layer cobre a secção inteira */
-    .bg-layer {
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-    }
-
-    /* bg-sticky cola-se logo abaixo da navbar (70px) e ocupa
-       o ecrã inteiro restante — a aurora fica full-screen */
-    .bg-sticky {
-      position: sticky;
-      top: 70px;
-      height: calc(100vh - 70px);
-      width: 100%;
-      overflow: hidden;
-    }
-
-    /* Aurora: ocupa 100% do bg-sticky — ecrã inteiro abaixo da navbar */
-    .bg-effect--aurora {
-      top: 0;
-      height: 100%;
-    }
-
-    /* Activities, devices e avatars: deslocados 38% para baixo (altura do mockup)
-       para não ficarem escondidos por trás do mockup */
-    .bg-effect:not(.bg-effect--aurora) {
-      top: 38%;
-      height: 62%;
-    }
-
-    /* scroll-container ocupa exactamente o ecrã disponível abaixo da navbar,
-       empilhado em coluna — mockup em cima, cards em baixo, sem espaço sobrante */
-    .scroll-container {
-      flex-direction: column;
-      padding-bottom: 0;
-      height: calc(100vh - 70px);
-      overflow: hidden;
-    }
-
-    /* mockup: 38% da altura disponível */
-    .sticky-visual {
-      display: flex !important;
-      position: relative;
-      top: 0;
-      width: 100%;
-      height: 38%;
-      flex-shrink: 0;
-      z-index: 25;
-      background: transparent;
-      padding: 8px 0 4px;
-    }
-
-    /* mockup-container: cresce até encher a altura da sticky-visual,
-       mantendo aspect-ratio — não excede nem deixa gap */
-    .mockup-container {
-      height: 100%;
-      width: auto;
-      aspect-ratio: 1 / 2;
-    }
-
-    /* FIX 2: notificação JITAI reposicionada relativa à sticky-visual
-       em vez do mockup-container — proporcional ao ecrã */
-    .jitai-notification {
-      position: absolute;
-      top: 6px;
-      left: 50%;
-      transform: translateX(-50%) translateY(-10px);
-      width: min(78vw, 320px);
-      padding: 10px 12px;
-      border-radius: 16px;
-      z-index: 30;
-    }
-    .jitai-notification.active {
-      transform: translateX(-50%) translateY(0);
-    }
-    .notif-app-icon { width: 15px; height: 15px; font-size: 9px; }
-    .notif-app-name { font-size: 10px; }
-    .notif-text     { font-size: 11px; }
-
-    .jitai-zone { left: -48px; top: 48%; }
-    .jitai-wearable-local { width: 52px; height: 52px; border-radius: 12px; }
-    .signal-waves-local { left: 24px; }
-    @keyframes ping-local {
-      0% { transform: translateY(-50%) scale(0.3); opacity: 1; }
-      100% { transform: translateY(-50%) translateX(60px) scale(1.8); opacity: 0; }
-    }
-
-    .activities-grid-fs {
-      gap: clamp(10px, 3vw, 16px);
-    }
-
-    .aurora-light-fs {
-      filter: blur(55px);
-      mix-blend-mode: normal;
-      opacity: 0.38;
-    }
-    .aurora-l-1, .aurora-l-2, .aurora-l-3 { width: 100vw; height: 100vw; }
-
-    .device-icon-fs {
-      animation: float-mobile 5s infinite ease-in-out alternate;
-      transform: scale(0.85);
-    }
-    .d-1 { top: 6%  !important; left: 4%  !important; }
-    .d-2 { top: 32% !important; left: 4%  !important; }
-    .d-3 { top: 60% !important; right: 4% !important; }
-    .d-4 { top: 82% !important; right: 4% !important; }
-
-    .social-avatar-fs {
-      animation: float-mobile 6s infinite ease-in-out alternate;
-    }
-    .avatar-circle-fs { width: 60px; height: 60px; font-size: 1.6rem; border-width: 3px; }
-    .avatar-label-fs  { font-size: 0.75rem; padding: 6px 12px; }
-    .s-1 { top: 5%  !important; left: 3%  !important; }
-    .s-2 { top: 30% !important; left: 3%  !important; }
-    .s-3 { top: 58% !important; right: 3% !important; }
-    .s-4 { top: 80% !important; right: 3% !important; }
-
-    @keyframes float-mobile {
-      0%   { transform: translate(0, 0) scale(0.85); }
-      100% { transform: translate(14px, -20px) scale(0.85); }
-    }
-
-    /* TRACK HORIZONTAL — ocupa os 62% restantes abaixo do mockup */
-    .scrolling-content {
-      width: 100% !important;
-      flex: 1 !important;
-      padding: 8px 24px 0 !important;
-      display: flex !important;
-      flex-direction: row !important;
-      align-items: stretch !important;
-      overflow-x: auto !important;
-      overflow-y: hidden !important;
-      scroll-snap-type: x mandatory !important;
-      gap: 14px;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-    }
-    .scrolling-content::-webkit-scrollbar { display: none; }
-
-    .feature-step {
-      min-height: unset !important;
-      height: 100% !important;
-      min-width: 84vw;
-      max-width: 85vw;
-      scroll-snap-align: center !important;
-      opacity: 0.4;
-      justify-content: center;
-      display: flex;
-      flex-direction: column;
-    }
-    .feature-step.is-active { opacity: 1; }
-
-    .feature-text-content {
-      padding: 22px;
-      border-radius: 24px;
-      background: rgba(255, 255, 255, 0.22) !important;
-      backdrop-filter: blur(28px) !important;
-      -webkit-backdrop-filter: blur(28px) !important;
-      border: 1px solid rgba(255, 255, 255, 0.32) !important;
-      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08) !important;
-    }
-    .features-wrapper.dark-mode .feature-text-content {
-      background: rgba(11, 17, 33, 0.55) !important;
-      border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    }
-
-    .feature-icon  { width: 44px; height: 44px; font-size: 1.4rem; margin-bottom: 10px; }
-    .feature-title { font-size: 1.2rem; margin-bottom: 8px; }
-    .feature-desc  { font-size: 0.95rem; line-height: 1.5; }
-
-    /* DOTS — margin compacto para não sair fora do ecrã */
-    .mobile-carousel-indicators {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
-      margin-top: 8px;
-      margin-bottom: 10px;
-      flex-shrink: 0;
-      width: 100%;
-      z-index: 35;
-      position: relative;
-    }
-    .indicator-dot {
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: rgba(2, 44, 34, 0.2);
-      transition: all 0.3s ease;
-    }
-    .features-wrapper.dark-mode .indicator-dot {
-      background: rgba(255, 255, 255, 0.2);
-    }
-    .indicator-dot.active {
-      width: 22px;
-      border-radius: 10px;
-      background: ${colors.green};
-    }
-    .features-wrapper.dark-mode .indicator-dot.active {
-      background: #00ffcc;
-    }
-  }
-`;
 
 const JitaiNotification = ({ isActive }) => (
   <div className={`jitai-notification ${isActive ? "active" : ""}`}>
@@ -605,8 +131,6 @@ export default function FeaturesSection() {
       id="features"
       className={`features-wrapper ${isDarkMode ? "dark-mode" : ""}`}
     >
-      <style>{stickyStyle}</style>
-
       {/* --- FUNDO --- */}
       <div className="bg-layer">
         <div className="bg-sticky">
@@ -629,9 +153,7 @@ export default function FeaturesSection() {
             </div>
           </div>
 
-          <div
-            className={`bg-effect bg-effect--aurora ${activeIndex === 2 ? "active" : ""}`}
-          >
+          <div className={`bg-effect ${activeIndex === 2 ? "active" : ""}`}>
             <div className="aurora-container-fs">
               <div className="aurora-light-fs aurora-l-1"></div>
               <div className="aurora-light-fs aurora-l-2"></div>
@@ -639,7 +161,9 @@ export default function FeaturesSection() {
             </div>
           </div>
 
-          <div className={`bg-effect ${activeIndex === 3 ? "active" : ""}`}>
+          <div
+            className={`bg-effect bg-effect--circles ${activeIndex === 3 ? "active" : ""}`}
+          >
             <div className="device-icon-fs d-1">
               <img src={lightIcon} alt="Smart Light" />
             </div>
@@ -654,7 +178,9 @@ export default function FeaturesSection() {
             </div>
           </div>
 
-          <div className={`bg-effect ${activeIndex === 4 ? "active" : ""}`}>
+          <div
+            className={`bg-effect bg-effect--circles ${activeIndex === 4 ? "active" : ""}`}
+          >
             <div className="social-avatar-fs s-1">
               <div className="avatar-circle-fs">👨🏽</div>
               <div className="avatar-label-fs">Pedro • Living Room</div>
@@ -717,11 +243,7 @@ export default function FeaturesSection() {
         </div>
 
         <div className="scroll-container">
-          {/* sticky-visual é agora o pai da notificação em mobile */}
           <div className="sticky-visual">
-            {/* FIX 2: JitaiNotification movida para dentro da sticky-visual
-                mas fora do mockup-container — assim o posicionamento em mobile
-                é relativo à zona visual inteira e não ao container minúsculo */}
             <JitaiNotification isActive={activeIndex === 0} />
 
             <div className="mockup-container">
@@ -771,6 +293,8 @@ export default function FeaturesSection() {
               flexDirection: "column",
               flex: 1,
               minHeight: 0,
+              justifyContent: "flex-start",
+              paddingTop: "10px",
             }}
           >
             <div
