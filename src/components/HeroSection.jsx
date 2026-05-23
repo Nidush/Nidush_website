@@ -39,29 +39,30 @@ const heroStyle = `
       height: auto !important;
       min-height: 100vh !important;
       padding-top: 110px !important;
-      padding-bottom: 20px !important; /* Dá um respiro para o telemóvel não bater no fundo e ser cortado */
+      padding-bottom: 0px !important; 
     }
     
     .wave-wrapper {
       transform: scale(2.8) !important; 
+      bottom: 35px !important; /* O TRUQUE: Sobe as ondas 35px para sobreporem o telemóvel */
     }
 
     .hero-inner { 
       flex-direction: column !important; 
       text-align: center !important; 
-      gap: 1rem !important; 
+      gap: 0px !important; /* Remove totalmente o fosso entre o texto e o telemóvel */
     }
     
     .hero-text { 
       align-items: center !important; 
+      margin-bottom: 16px !important; /* Margem minúscula para separar os botões do telemóvel */
     }
 
     .hero-question {
-      /* Altura suficiente para a frase mais longa (3 a 4 linhas) sem deixar o telemóvel saltar */
       min-height: 90px !important; 
-      margin-bottom: 8px !important; 
+      margin-bottom: 0px !important; 
       display: flex !important;
-      align-items: center !important; /* Mantém o texto sempre centrado verticalmente neste espaço */
+      align-items: center !important; 
       justify-content: center !important;
     }
 
@@ -72,7 +73,7 @@ const heroStyle = `
     }
 
     .hero-subtitle {
-      margin-bottom: 24px !important; 
+      margin-bottom: 20px !important; 
     }
 
     .hero-buttons {
@@ -81,7 +82,7 @@ const heroStyle = `
 
     .hero-image { 
       margin-top: 0px !important; 
-      margin-bottom: -15px !important; /* Puxa o telemóvel para a onda sem sair dos limites da secção */
+      margin-bottom: 0px !important; /* Sem margem negativa = não corta o telemóvel! */
       transform: rotate(0deg) !important; 
     }
     
