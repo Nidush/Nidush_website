@@ -20,7 +20,7 @@ const LINKS = [
   },
   {
     label: "YouTube",
-    url: "https://www.youtube.com/Nidush-app",
+    url: "https://www.youtube.com/@Nidush-app",
     icon: (
       <svg
         width="22"
@@ -28,7 +28,7 @@ const LINKS = [
         viewBox="0 0 24 17"
         fill="currentColor"
         xmlns="http://www.w3.org/2000/svg"
-        style={{ display: "block" }} // Garante que não há espaços estranhos de linha
+        style={{ display: "block" }}
       >
         <path d="M23.498 6.186a2.94 2.94 0 0 0-2.067-2.078C19.347 3.655 12 3.655 12 3.655s-7.348 0-9.431.453c-1.15.253-2.056 1.156-2.316 2.078C0 7.973 0 11.722 0 11.722s0 3.75.253 5.536c.26.922 1.166 1.825 2.316 2.078 2.083.453 9.431.453 9.431.453s7.348 0 9.431-.453c1.15-.253 2.056-1.156 2.316-2.078.253-1.786.253-5.536.253-5.536s0-3.749-.253-5.536zm-13.344 7.647V8.167l6.233 2.833-6.233 2.833z" />
       </svg>
@@ -86,14 +86,14 @@ const footerStyle = `
       gap: 28px;
     }
     .footer-logo {
-      order: 1; /* Logótipo no topo */
+      order: 1;
     }
     .footer-links {
-      order: 2; /* Ícones e Links no meio */
+      order: 2;
       justify-content: center;
     }
     .footer-copyright {
-      order: 3; /* Copyright no fundo */
+      order: 3;
       text-align: center;
       margin-top: 8px;
     }
@@ -128,6 +128,7 @@ export default function Footer() {
         <div className="footer-links">
           {LINKS.map((link) => {
             const isExternal = link.url && link.url.startsWith("http");
+            const isTextLink = !link.icon;
 
             return (
               <a
@@ -143,8 +144,11 @@ export default function Footer() {
                   textDecoration: "none",
                   transition: "color 0.2s",
                   color: "rgba(255,255,255,0.45)",
-                  width: "32px", // Espaço fixo para cada ícone
-                  height: "32px",
+                  width: isTextLink ? "auto" : "32px", // Auto para texto, 32px para ícones
+                  height: isTextLink ? "auto" : "32px",
+                  whiteSpace: "nowrap", // Garante que o texto fica numa só linha
+                  fontFamily: isTextLink ? fonts.main : undefined,
+                  fontSize: isTextLink ? "13px" : undefined,
                 }}
                 onMouseEnter={(e) =>
                   (e.currentTarget.style.color = colors.softGreen)
@@ -153,7 +157,6 @@ export default function Footer() {
                   (e.currentTarget.style.color = "rgba(255,255,255,0.45)")
                 }
               >
-                {/* Usamos um wrapper span para garantir o alinhamento */}
                 <span
                   style={{
                     display: "flex",
@@ -163,18 +166,15 @@ export default function Footer() {
                     height: "100%",
                   }}
                 >
-                  {/* Aqui injetamos o ícone. Se for um SVG, garantimos que ele preenche o espaço */}
-                  {
-                    link.icon
-                      ? React.cloneElement(link.icon, {
-                          style: {
-                            width: "20px",
-                            height: "20px",
-                            display: "block",
-                          },
-                        })
-                      : link.label // Caso não haja ícone, mostra o texto
-                  }
+                  {link.icon
+                    ? React.cloneElement(link.icon, {
+                        style: {
+                          width: "20px",
+                          height: "20px",
+                          display: "block",
+                        },
+                      })
+                    : link.label}
                 </span>
               </a>
             );
