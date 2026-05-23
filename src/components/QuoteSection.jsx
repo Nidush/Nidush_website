@@ -59,8 +59,8 @@ export default function QuoteSection() {
             letterSpacing: "-0.01em",
           }}
         >
-          Whatever your version of peace looks like today — Nidush helps you
-          shape your home to match it.
+          Your home has always been your refuge. Now it knows how to act like
+          one.
         </p>
         <div
           style={{

@@ -14,10 +14,10 @@ import tempIcon from "../assets/difuser.png";
 import speakerIcon from "../assets/smart_speaker.png";
 import lockIcon from "../assets/purificador_ar.png";
 
-import actImg1 from "../assets/gentle_rise.png";
-import actImg2 from "../assets/deep_focus.png";
-import actImg3 from "../assets/deep_sleep.png";
-import actImg4 from "../assets/nature_escape.png";
+import actImg1 from "../assets/atividade1.png";
+import actImg2 from "../assets/atividade2.png";
+import actImg3 from "../assets/atividade3.png";
+import actImg4 from "../assets/atividade4.png";
 
 const FEATURES = [
   {
@@ -187,15 +187,15 @@ export default function FeaturesSection() {
             </div>
             <div className="social-avatar-fs s-2">
               <div className="avatar-circle-fs">👩🏻</div>
-              <div className="avatar-label-fs">Duda • Kitchen</div>
+              <div className="avatar-label-fs">Laura • Kitchen</div>
             </div>
             <div className="social-avatar-fs s-3">
               <div className="avatar-circle-fs">🧑🏼</div>
-              <div className="avatar-label-fs">Gabriel • Bedroom</div>
+              <div className="avatar-label-fs">Miguel • Bedroom</div>
             </div>
             <div className="social-avatar-fs s-4">
               <div className="avatar-circle-fs">👵🏼</div>
-              <div className="avatar-label-fs">Maria • Garden</div>
+              <div className="avatar-label-fs">Inês • Garden</div>
             </div>
           </div>
         </div>
@@ -209,19 +209,16 @@ export default function FeaturesSection() {
               display: "inline-flex",
               alignItems: "center",
               gap: 8,
-              background: isDarkMode
-                ? "rgba(255,255,255,0.1)"
-                : colors.softGreen + "44",
               borderRadius: 50,
               padding: "8px 20px",
               marginBottom: 20,
-              border: isDarkMode ? "1px solid rgba(255,255,255,0.2)" : "none",
             }}
           >
             <span
               style={{
-                fontSize: 13,
-                fontWeight: 700,
+                fontSize: 11,
+                fontWeight: 800,
+                letterSpacing: "0.2em",
                 color: isDarkMode ? "#00ffcc" : colors.green,
               }}
             >
