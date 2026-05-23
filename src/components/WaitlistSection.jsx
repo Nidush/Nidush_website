@@ -146,7 +146,7 @@ export default function WaitlistSection() {
             <div
               style={{
                 display: "flex",
-                gap: 8,
+                gap: "24px 8px",
                 maxWidth: 480,
                 width: "100%",
                 flexWrap: "wrap",

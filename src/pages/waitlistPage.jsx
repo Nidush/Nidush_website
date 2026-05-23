@@ -19,7 +19,7 @@ export default function WaitlistPage() {
 
   const handleSubmit = async () => {
     if (!email.includes("@") || !email.includes(".")) {
-      setMessage("Por favor, insere um endereço de email válido.");
+      setMessage("Please enter a valid email address.");
       return;
     }
 
@@ -32,7 +32,7 @@ export default function WaitlistPage() {
       const querySnapshot = await getDocs(q);
 
       if (!querySnapshot.empty) {
-        setMessage("This email is already registered in our waitlist. 🌱");
+        setMessage("This email is already registered in our waitlist.");
         setIsSubmitting(false);
         return;
       }
@@ -54,7 +54,7 @@ export default function WaitlistPage() {
 
       setSubmitted(true);
     } catch (error) {
-      console.error("Erro ao processar o registo: ", error);
+      console.error("Error processing registration: ", error);
       setMessage("There was an error. Please try again.");
     } finally {
       setIsSubmitting(false);
