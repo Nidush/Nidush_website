@@ -50,6 +50,10 @@ export default function NavBar() {
             <img src={Logo} alt="Logo Nidush" className="nav-logo" />
           </Link>
         </div>
+        <div className="nav-badge nav-badge-inline-mobile">
+          <div className="nav-badge-dot" />
+          <span className="nav-badge-text">Coming Soon</span>
+        </div>
 
         {/* LINKS DESKTOP */}
         <div className="nav-links-desktop">
@@ -91,12 +95,6 @@ export default function NavBar() {
               {label}
             </Link>
           ))}
-
-          {/* BADGE MOBILE */}
-          <div className="nav-badge nav-badge-mobile">
-            <div className="nav-badge-dot" />
-            <span className="nav-badge-text">Coming Soon</span>
-          </div>
         </div>
       </div>
     </nav>

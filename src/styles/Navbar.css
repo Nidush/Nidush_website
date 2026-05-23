@@ -47,6 +47,16 @@
   width: 6rem; /* Equivalente a w-24 no Tailwind */
   height: auto;
 }
+.nav-badge-inline-mobile {
+  display: inline-flex; /* visível em mobile */
+  padding: 5px 14px;
+  gap: 7px;
+}
+@media (min-width: 768px) {
+  .nav-badge-inline-mobile {
+    display: none; /* esconde no desktop, o desktop usa nav-badge-desktop */
+  }
+}
 @media (min-width: 768px) {
   .nav-logo {
     width: 7rem; /* Equivalente a w-28 */
