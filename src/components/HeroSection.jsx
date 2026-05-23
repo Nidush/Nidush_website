@@ -33,12 +33,13 @@ const heroStyle = `
   }
 
   /* --- REGRAS PARA MOBILE & TABLETS --- */
+ /* --- REGRAS PARA MOBILE & TABLETS --- */
   @media (max-width: 900px) {
     .hero-section {
       height: auto !important;
       min-height: 100vh !important;
       padding-top: 110px !important;
-      padding-bottom: 80px !important; 
+      padding-bottom: 20px !important; /* Dá um respiro para o telemóvel não bater no fundo e ser cortado */
     }
     
     .wave-wrapper {
@@ -48,24 +49,42 @@ const heroStyle = `
     .hero-inner { 
       flex-direction: column !important; 
       text-align: center !important; 
-      gap: 2.5rem !important;
+      gap: 1rem !important; 
     }
+    
     .hero-text { 
       align-items: center !important; 
     }
+
+    .hero-question {
+      /* Altura suficiente para a frase mais longa (3 a 4 linhas) sem deixar o telemóvel saltar */
+      min-height: 90px !important; 
+      margin-bottom: 8px !important; 
+      display: flex !important;
+      align-items: center !important; /* Mantém o texto sempre centrado verticalmente neste espaço */
+      justify-content: center !important;
+    }
+
     .hero-question p, .hero-subtitle {
       text-align: center !important;
       margin-left: auto !important;
       margin-right: auto !important;
     }
+
+    .hero-subtitle {
+      margin-bottom: 24px !important; 
+    }
+
     .hero-buttons {
       justify-content: center !important;
     }
+
     .hero-image { 
-      margin-top: 20px !important; 
-      margin-bottom: -40px !important; 
+      margin-top: 0px !important; 
+      margin-bottom: -15px !important; /* Puxa o telemóvel para a onda sem sair dos limites da secção */
       transform: rotate(0deg) !important; 
     }
+    
     .ambient-blob {
       transform: scale(0.6);
     }
